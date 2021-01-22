@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>epi_migrate</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Preserve ConfigUpdaters and SourceUpdaters directories -->
+  <ItemGroup>
+    <Content Include="ConfigUpdaters\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SourceUpdaters\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <!-- Include templates as content -->
+  <ItemGroup>
+    <Compile Remove="Templates\**\*.cs" />
+    <None Remove="Templates\**\*.json" />
+    <Content Include="Templates\**\*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <!-- Include package maps as content -->
+  <ItemGroup>
+    <Content Include="PackageMaps\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  
+</Project>
