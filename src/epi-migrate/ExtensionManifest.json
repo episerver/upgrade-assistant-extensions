@@ -1,0 +1,14 @@
+﻿{
+  "ConfigUpdaterOptions": {
+    "ConfigUpdaterPath": "ConfigUpdaters"
+  },
+  "PackageUpdaterOptions": {
+    "PackageMapPath": "PackageMaps"
+  },
+  "SourceUpdaterOptions": {
+    "SourceUpdaterPath": "SourceUpdaters"
+  },
+  "TemplateInserterOptions": {
+    "TemplatePath": "Templates"
+  }
+}
