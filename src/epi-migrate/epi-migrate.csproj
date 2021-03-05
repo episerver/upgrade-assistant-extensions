@@ -10,14 +10,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
 
-    <!-- Preserve ConfigUpdaters and SourceUpdaters directories -->
-    <Content Include="ConfigUpdaters\readme.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SourceUpdaters\readme.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-
     <!-- Include templates as content -->
     <Compile Remove="Templates\**\*.cs" />
     <None Remove="Templates\**\*.json" />

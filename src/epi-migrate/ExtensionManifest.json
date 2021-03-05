@@ -5,10 +5,9 @@
   "PackageUpdater": {
     "PackageMapPath": "PackageMaps"
   },
-  "SourceUpdater": {
-    "SourceUpdaterPath": "SourceUpdaters"
-  },
   "TemplateInserter": {
-    "TemplatePath": "Templates"
+    "TemplateConfigFiles": [
+      "Templates\\EPiServerTemplates\\TemplateConfig.json"
+    ]
   }
 }
