@@ -20,5 +20,11 @@
       ]
     }
   ],
-  "UpdateWebAppsOnly": true
+  "TemplateOutputType": [
+    "Exe"
+  ],
+  "TemplateLanguage": "CSharp",
+  "TemplateAppliesTo": [
+    "AspNetCore"
+  ]
 }

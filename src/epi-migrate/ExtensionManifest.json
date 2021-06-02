@@ -1,4 +1,5 @@
 ﻿{
+  "ExtensionName" "EPiServer Extensions",
   "ConfigUpdater": {
     "ConfigUpdaterPath": "ConfigUpdaters"
   },
