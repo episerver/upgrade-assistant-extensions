@@ -1,4 +1,4 @@
-# EPiServer Update Assistant Extensions
+# EPiServer Upgrade Assistant Extensions
 
 This repository contains extensions to the Upgrade Assistant tool specific to EPiServer scenarios.
 
