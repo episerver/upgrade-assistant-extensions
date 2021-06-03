@@ -1,14 +1,23 @@
 ﻿{
-  "ExtensionName" "EPiServer Extensions",
-  "ConfigUpdater": {
-    "ConfigUpdaterPath": "ConfigUpdaters"
-  },
+  "ExtensionName": "EPiServer Extensions",
+
   "PackageUpdater": {
     "PackageMapPath": "PackageMaps"
   },
+
   "TemplateInserter": {
     "TemplateConfigFiles": [
       "Templates\\EPiServerTemplates\\TemplateConfig.json"
     ]
-  }
+  },
+
+  "SourceUpdater": {
+    "AdditionalAnalyzerTexts": [
+      
+    ]
+  },
+
+  "ExtensionServiceProviders": [
+    
+  ]
 }

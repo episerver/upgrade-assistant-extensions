@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F9838F04-6B40-4C69-8478-251AD71CA780}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "epi-migrate", "src\epi-migrate\epi-migrate.csproj", "{6F1B11D8-7948-4BDD-97EF-1548882E77DA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiServerExtensions", "src\EPiServerExtensions\EPiServerExtensions.csproj", "{6F1B11D8-7948-4BDD-97EF-1548882E77DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
