@@ -1,5 +1,5 @@
 ﻿{
-  "ExtensionName": "EPiServer Extensions",
+  "ExtensionName": "EPI Source updater extension",
 
   "PackageUpdater": {
     "PackageMapPath": "PackageMaps"
@@ -13,11 +13,11 @@
 
   "SourceUpdater": {
     "AdditionalAnalyzerTexts": [
-      
+
     ]
   },
 
   "ExtensionServiceProviders": [
-    
+
   ]
 }
