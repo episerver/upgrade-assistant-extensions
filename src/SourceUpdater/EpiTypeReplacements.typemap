@@ -1,0 +1,4 @@
+﻿# These mappings represent EPI Server types that should be replaced when upgrading to ASP.NET Core
+
+EPiServer.Web.Routing	EPiServer.Core.Routing
+Foundation.Commerce.Markets   Foundation.Infrastructure.Commerce.Markets 

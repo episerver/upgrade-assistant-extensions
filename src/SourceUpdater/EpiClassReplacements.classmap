@@ -1,0 +1,4 @@
+﻿# These mappings represent EPI Server types that should be replaced when upgrading to ASP.NET Core
+
+BlockController	BlockComponent
+PartialContentController   PartialContentComponent
