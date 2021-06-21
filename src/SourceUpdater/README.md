@@ -1,4 +1,4 @@
-# Upgrade Assistant source updater wiht EPI Server extension
+# Upgrade Assistant source updater with EPI Server extension
 
 This demonstrates how to add and execute the EPI SErver Extension. 
 The Extension is an addon which analyzes and updates Source Files, specified in he EPI SErve extension. 
@@ -6,13 +6,13 @@ The Extension is an addon which analyzes and updates Source Files, specified in 
 
 
 
-##Installation
+## Installation
 
-###Upgrade Assitantan
+### Upgrade Assitantan
 Install the upgrade-assistant dotnet tool from [Upgrade-Asstant](https://dotnet.microsoft.com/platform/upgrade-assistant)
 **dotnet tool install -g upgrade-assistant**
 
-###Epi Server Extension
+### Epi Server Extension
 Download Source Code and Rebuild it using Visual Studion 2019: [EPI Server Upgrade-Assistant-Extension](https://github.com/episerver/upgrade-assistant-extensions/tree/develop) 
 
 If successfully rebuilt, take the extension Files and copy them to another place on your local machine: 
@@ -20,7 +20,7 @@ eg.
  from ..\src\SourceUpdater\bin\Debug\netstandard2.0  to  c:\EPI-Extension\  
 ![Screenshot with EPI Server Extension](./images/Epi-Extension-items.jpg)
  
-##Execution
+## Execution
 open up Developer Command line Tool: 
 
 run the upgrade-assistant tool by referencing the EPI Extension 
@@ -30,17 +30,17 @@ upgrade-assistant upgrade C:\Data\CustomerProjects\EPI\demoApptoUpgrade\WepApp1\
 
 ![Screenshot with EPI Server Extension](./images/Upgrade-Assistant-with-Epi-Extension.jpg)
 
-###Capabilities###
+### Capabilities
 The EPI Server Extension provides a couple of EPI Secific capabilits: 
 
 
 - Type Mapping
-- Base Class Mapping 
+- Base Class Mapping  
 - String Replacement 
 - Remove PropertyData.ParseToObject method 
 - Remove Default Argument for the TemplateDescriptor Attribute 
 
-###Confuguration###
+### Confuguration
 Type and Base Class Mapping and also String Replacements can be configured and can therefore be used for other mappings as well. 
 
 Specify new EPI repalted Types in the .typemap File, by adding the old type space/tab followed by the new type:
