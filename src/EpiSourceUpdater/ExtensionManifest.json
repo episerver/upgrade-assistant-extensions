@@ -10,11 +10,14 @@
   "FindReplaceOptions": {
     "Replacements": {
       "// TODO": "// Updated todo",
-      //"[TemplateDescriptor(Default = true)]": "[TemplateDescriptor]",
       "[AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]": "[AcceptVerbs(new string[] {\"GET\",\"POST\" })]"
-      //"PartialContentController<": "PartialContentComponent<",
-      //"BlockController<": "BlockComponent<"
     }
+  },
+
+  "ObsoleteOptions": {
+    "Usings": [
+      "Mediachase.BusinessFoundation"
+    ]
   },
 
   "SourceUpdater": {

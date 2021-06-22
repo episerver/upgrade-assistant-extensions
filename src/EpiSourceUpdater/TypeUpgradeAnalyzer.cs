@@ -21,8 +21,9 @@ namespace Epi.Source.Updater
     {
         /// <summary>
         /// The diagnostic ID for diagnostics produced by this analyzer.
+        /// <see cref="https://github.com/episerver/upgrade-assistant-extensions/issues/5">Related issue</see>.
         /// </summary>
-        public const string DiagnosticId = "EP0002";
+        public const string DiagnosticId = "EP0005";
 
         /// <summary>
         /// Key name for the diagnostic property containing the full name of the type
@@ -114,7 +115,6 @@ namespace Epi.Source.Updater
             // Store the new identifier name that this identifier should be replaced with for use
             // by the code fix provider.
             var properties = ImmutableDictionary.Create<string, string?>().Add(NewIdentifierKey, mapping.NewName);
-
         }
     }
 }

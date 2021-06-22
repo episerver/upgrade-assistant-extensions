@@ -13,8 +13,10 @@ using CSSyntax = Microsoft.CodeAnalysis.CSharp.Syntax;
 namespace Epi.Source.Updater
 {
     /// <summary>
-    /// Analyzer for identifying usage of types that should be replaced with other types.
+    /// Analyzer for identifying usage of base class types that should be replaced with other types.
     /// Diagnostics are created based on mapping configurations.
+    /// <see href="https://github.com/episerver/upgrade-assistant-extensions/issues/2">Related issue</see>.
+    /// <see href="https://github.com/episerver/upgrade-assistant-extensions/issues/3">Related issue</see>.
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class EpiClassReplacementsAnalyzer : DiagnosticAnalyzer
@@ -22,7 +24,7 @@ namespace Epi.Source.Updater
         /// <summary>
         /// The diagnostic ID for diagnostics produced by this analyzer.
         /// </summary>
-        public const string DiagnosticId = "EP0001";
+        public const string DiagnosticId = "EP0002";
 
         /// <summary>
         /// Key name for the diagnostic property containing the full name of the type
@@ -97,7 +99,6 @@ namespace Epi.Source.Updater
         /// <param name="simpleName">The simple name of the identifier being analyzed.</param>
         private static void AnalyzeIdentifier(SyntaxNodeAnalysisContext context, IEnumerable<TypeMapping> mappings, string simpleName)
         {
-
             var classDirective = (CSSyntax.ClassDeclarationSyntax)context.Node;
             if (classDirective is null)
             {
@@ -124,7 +125,7 @@ namespace Epi.Source.Updater
                     // Store the new identifier name that this identifier should be replaced with for use
                     // by the code fix provider.
                     var properties = ImmutableDictionary.Create<string, string?>().Add(NewIdentifierKey, map.NewName);
-                    
+
                     var diagnosti = Diagnostic.Create(Rule, classDirective.GetLocation(), properties, nameOfFirstBaseType);
                     context.ReportDiagnostic(diagnosti);
                 }

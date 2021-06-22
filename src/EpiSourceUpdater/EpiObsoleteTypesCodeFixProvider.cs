@@ -19,7 +19,7 @@ namespace Epi.Source.Updater
     /// dependency injection container (by IExtensionServiceProvider) will be used during
     /// the source update step.
     /// </summary>
-    [ExportCodeFixProvider(LanguageNames.CSharp, Name = "EP0003 CodeFix Provider")]
+    [ExportCodeFixProvider(LanguageNames.CSharp, Name = "EP0004 CodeFix Provider")]
     public class EpiObsoleteTypesCodeFixProvider : CodeFixProvider
     {
         // The Upgrade Assistant will only use analyzers that have an associated code fix provider registered including
@@ -62,7 +62,6 @@ namespace Epi.Source.Updater
 
         private static async Task<Document> RemoveObsoleteTypesAsync(Document document, MethodDeclarationSyntax localDeclaration, CancellationToken cancellationToken)
         {
-
             // Remove PropertyData ParseToObject method.
             var oldRoot = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
             var newRoot = oldRoot!.RemoveNode(localDeclaration, SyntaxRemoveOptions.AddElasticMarker);

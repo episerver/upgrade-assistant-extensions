@@ -21,8 +21,8 @@ namespace Epi.Source.Updater
     /// </summary>
     public class EpiSourceUpdaterServiceProvider : IExtensionServiceProvider
     {
-
         private const string FindReplaceOptionsSectionName = "FindReplaceOptions";
+        private const string ObsoleteOptionsSectionName = "ObsoleteOptions";
 
         /// <summary>
         /// Registers services (the analyzer and code fix provider) comprising the
@@ -45,20 +45,24 @@ namespace Epi.Source.Updater
             // RazorUpdaterStep).
 
             // Analyzers.
-            services.Services.AddTransient<DiagnosticAnalyzer, EpiClassReplacementsAnalyzer>();
-            services.Services.AddTransient<DiagnosticAnalyzer, TypeUpgradeAnalyzer>();
-            services.Services.AddTransient<DiagnosticAnalyzer, EpiObsoleteTypesAnalyzer>();
-            services.Services.AddTransient<DiagnosticAnalyzer, EpiAttributeRemoverAnalyzer>();
+            services.Services.AddTransient<DiagnosticAnalyzer, EpiAttributeRemoverAnalyzer>();      // EP0001
+            services.Services.AddTransient<DiagnosticAnalyzer, EpiClassReplacementsAnalyzer>();     // EP0002
+            services.Services.AddTransient<DiagnosticAnalyzer, EpiObsoleteTypesAnalyzer>();         // EP0004
+            services.Services.AddTransient<DiagnosticAnalyzer, TypeUpgradeAnalyzer>();              // EP0005
+            services.Services.AddTransient<DiagnosticAnalyzer, EpiObsoleteUsingAnalyzer>();         // EP0006
 
             // Upgrade Step.
             services.Services.AddUpgradeStep<FindReplaceUpgradeStep>();
             services.AddExtensionOption<FindReplaceOptions>(FindReplaceOptionsSectionName);
 
             // Code Fixers.
-            services.Services.AddTransient<CodeFixProvider, EpiClassReplacementsCodeFixProvider>();
-            services.Services.AddTransient<CodeFixProvider, TypeUpgradeCodeFixProvider>();
-            services.Services.AddTransient<CodeFixProvider, EpiObsoleteTypesCodeFixProvider>();
-            services.Services.AddTransient<CodeFixProvider, EpiAttributeRemoverCodeFixProvider>();
+            services.Services.AddTransient<CodeFixProvider, EpiAttributeRemoverCodeFixProvider>();  // EP0001
+            services.Services.AddTransient<CodeFixProvider, EpiClassReplacementsCodeFixProvider>(); // EP0002
+            services.Services.AddTransient<CodeFixProvider, EpiObsoleteTypesCodeFixProvider>();     // EP0004
+            services.Services.AddTransient<CodeFixProvider, TypeUpgradeCodeFixProvider>();          // EP0005
+            services.Services.AddTransient<CodeFixProvider, EpiObsoleteUsingCodeFixProvider>();     // EP0006
+
+            services.AddExtensionOption<ObsoletePropertyOptions>(ObsoleteOptionsSectionName);
         }
     }
 }

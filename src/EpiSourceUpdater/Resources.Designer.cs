@@ -88,7 +88,7 @@ namespace Epi.Source.Updater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This class is no longer supported on EPI Server and will be replaced..
+        ///   Looks up a localized string similar to This class is no longer supported on EPI Server and will be replaced.
         /// </summary>
         internal static string EpiClassUpgradeDescription {
             get {
@@ -115,7 +115,7 @@ namespace Epi.Source.Updater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to EPI Server net5 projects should not reference Mediachase.BusinessFoundation or PropertyData.ParseToObject types..
+        ///   Looks up a localized string similar to EPI Server net5 projects should not reference Mediachase.BusinessFoundation or PropertyData.ParseToObject types.
         /// </summary>
         internal static string EpiDisallowedTypesDescription {
             get {
@@ -142,7 +142,34 @@ namespace Epi.Source.Updater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Variables that are not set after they are created should be marked as constant..
+        ///   Looks up a localized string similar to Obsolete using statements should be removed..
+        /// </summary>
+        internal static string EpiObsoleteUsingDescription {
+            get {
+                return ResourceManager.GetString("EpiObsoleteUsingDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Using statement {0} should be removed.
+        /// </summary>
+        internal static string EpiObsoleteUsingMessageFormat {
+            get {
+                return ResourceManager.GetString("EpiObsoleteUsingMessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove obsolete usings.
+        /// </summary>
+        internal static string EpiObsoleteUsingTitle {
+            get {
+                return ResourceManager.GetString("EpiObsoleteUsingTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Variables that are not set after they are created should be marked as constant.
         /// </summary>
         internal static string MakeConstDescription {
             get {

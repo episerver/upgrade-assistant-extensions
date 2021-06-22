@@ -11,11 +11,23 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Epi.Source.Updater
 {
+    /// <summary>
+    /// Analyzer for identifying and removing obsolet types or methods.
+    /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public sealed class EpiObsoleteTypesAnalyzer : DiagnosticAnalyzer
     {
-        public const string DiagnosticId = "EP0003";
+        /// <summary>
+        /// The diagnostic ID for diagnostics produced by this analyzer.
+        /// <see href="https://github.com/episerver/upgrade-assistant-extensions/issues/4">Related issue</see>.
+        /// </summary>
+        public const string DiagnosticId = "EP0004";
+
+        /// <summary>
+        /// The diagnsotic category for diagnostics produced by this analyzer.
+        /// </summary>
         private const string Category = "Upgrade";
+
         /// <summary>
         /// Key name for the diagnostic property containing the full name of the type
         /// the code fix provider should use to replace the syntax node identified

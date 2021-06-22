@@ -15,6 +15,7 @@ namespace Epi.Source.Updater
     /// <summary>
     /// Analyzer for identifying usage of types that should be replaced with other types.
     /// Diagnostics are created based on mapping configurations.
+    /// <see href="https://github.com/episerver/upgrade-assistant-extensions/issues/1">Related issue</see>.
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class EpiAttributeRemoverAnalyzer : DiagnosticAnalyzer
@@ -22,7 +23,7 @@ namespace Epi.Source.Updater
         /// <summary>
         /// The diagnostic ID for diagnostics produced by this analyzer.
         /// </summary>
-        public const string DiagnosticId = "EP0004";
+        public const string DiagnosticId = "EP0001";
 
         /// <summary>
         /// Key name for the diagnostic property containing the full name of the type
@@ -97,13 +98,11 @@ namespace Epi.Source.Updater
         /// <param name="simpleName">The simple name of the identifier being analyzed.</param>
         private static void AnalyzeIdentifier(SyntaxNodeAnalysisContext context, IEnumerable<TypeMapping> mappings, string simpleName)
         {
-
             var classDirective = (CSSyntax.ClassDeclarationSyntax)context.Node;
             if (classDirective is null)
             {
                 return;
             }
-
 
             if (classDirective.AttributeLists.Count == 0)
             {
@@ -112,23 +111,18 @@ namespace Epi.Source.Updater
 
             foreach (var attib in classDirective.AttributeLists)
             {
-
                 if (attib.Attributes[0].Name.ToString() == "TemplateDescriptor")
                 {
                     foreach (var arg in attib.Attributes[0].ArgumentList.Arguments)
                     {
-
                         if (arg.NameEquals.Name.Identifier.Text == "Default")
                         {
                             var diagnostic = Diagnostic.Create(Rule, classDirective.GetLocation(), attib.Attributes[0].Name.ToString());
                             context.ReportDiagnostic(diagnostic);
                         }
-
                     }
                 }
-
             }
-
         }
     }
 }

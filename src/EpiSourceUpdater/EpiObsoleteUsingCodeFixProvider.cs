@@ -10,7 +10,6 @@ using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.CodeAnalysis.Editing;
 using Microsoft.CodeAnalysis.Formatting;
 
 namespace Epi.Source.Updater
@@ -20,12 +19,12 @@ namespace Epi.Source.Updater
     /// dependency injection container (by IExtensionServiceProvider) will be used during
     /// the source update step.
     /// </summary>
-    [ExportCodeFixProvider(LanguageNames.CSharp, Name = "EP0001 CodeFix Provider")]
-    public class EpiAttributeRemoverCodeFixProvider : CodeFixProvider
+    [ExportCodeFixProvider(LanguageNames.CSharp, Name = "EP0006 CodeFix Provider")]
+    public class EpiObsoleteUsingCodeFixProvider : CodeFixProvider
     {
         // The Upgrade Assistant will only use analyzers that have an associated code fix provider registered including
         // the analyzer's ID in the code fix provider's FixableDiagnosticIds array.
-        public sealed override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(EpiAttributeRemoverAnalyzer.DiagnosticId);
+        public sealed override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(EpiObsoleteUsingAnalyzer.DiagnosticId);
 
         public sealed override FixAllProvider GetFixAllProvider()
         {
@@ -45,7 +44,7 @@ namespace Epi.Source.Updater
             var diagnostic = context.Diagnostics.First();
             var diagnosticSpan = diagnostic.Location.SourceSpan;
 
-            var declaration = root.FindToken(diagnosticSpan.Start).Parent?.AncestorsAndSelf().OfType<ClassDeclarationSyntax>().First();
+            var declaration = root.FindToken(diagnosticSpan.Start).Parent?.AncestorsAndSelf().OfType<UsingDirectiveSyntax>().First();
 
             if (declaration is null)
             {
@@ -54,38 +53,21 @@ namespace Epi.Source.Updater
 
             // Register a code action that will invoke the fix.
             context.RegisterCodeFix(
-            CodeAction.Create(
-                Resources.EpiAttributeRemoverTitle,
-                c => ReplaceClassesAsync(context.Document, declaration, c),
-                nameof(Resources.EpiAttributeRemoverTitle)),
-            diagnostic);
+                CodeAction.Create(
+                    Resources.EpiDisallowedTypesTitle,
+                    c => RemoveObsoleteUsingAsync(context.Document, declaration, c),
+                    nameof(Resources.EpiDisallowedTypesTitle)),
+                diagnostic);
         }
 
-        private static async Task<Document> ReplaceClassesAsync(Document document, ClassDeclarationSyntax localDeclaration, CancellationToken cancellationToken)
+        private static async Task<Document> RemoveObsoleteUsingAsync(Document document, UsingDirectiveSyntax localDeclaration, CancellationToken cancellationToken)
         {
-            // Remove the leading trivia from the local declaration.
+            // Remove PropertyData ParseToObject method.
             var oldRoot = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
-            var newNode = localDeclaration;
-
-            foreach (var attrib in localDeclaration.AttributeLists)
-            {
-                if (attrib.Attributes[0].Name.ToString() == "TemplateDescriptor")
-                {
-                    foreach (var arg in attrib.Attributes[0].ArgumentList.Arguments)
-                    {
-                        if (arg.NameEquals.Name.Identifier.Text == "Default")
-                        {
-                            var removedArg = attrib.Attributes[0].ArgumentList.RemoveNode(arg, SyntaxRemoveOptions.AddElasticMarker);
-                            newNode = localDeclaration.RemoveNode(arg, SyntaxRemoveOptions.KeepNoTrivia);
-                        }
-                    }
-                }
-            }
-
-            var updatedRoot = oldRoot!.ReplaceNode(localDeclaration, newNode);
+            var newRoot = oldRoot!.RemoveNode(localDeclaration, SyntaxRemoveOptions.AddElasticMarker);
 
             // Return document with transformed tree.
-            return document.WithSyntaxRoot(updatedRoot);
+            return document.WithSyntaxRoot(newRoot);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Epi.Source.Updater
     /// dependency injection container (by IExtensionServiceProvider) will be used during
     /// the source update step.
     /// </summary>
-    [ExportCodeFixProvider(LanguageNames.CSharp, Name = "EP0002 CodeFix Provider")]
+    [ExportCodeFixProvider(LanguageNames.CSharp, Name = "EP0005 CodeFix Provider")]
     public class TypeUpgradeCodeFixProvider : CodeFixProvider
     {
         // The Upgrade Assistant will only use analyzers that have an associated code fix provider registered including

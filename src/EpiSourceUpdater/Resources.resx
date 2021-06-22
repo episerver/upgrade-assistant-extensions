@@ -127,7 +127,7 @@
     <value>EPI Server Framework Attribute TemplateDescriptor will be updated</value>
   </data>
   <data name="EpiClassUpgradeDescription" xml:space="preserve">
-    <value>This class is no longer supported on EPI Server and will be replaced.</value>
+    <value>This class is no longer supported on EPI Server and will be replaced</value>
   </data>
   <data name="EpiClassUpgradeMessageFormat" xml:space="preserve">
     <value>Class '{0}' will be replaced with '{1}'</value>
@@ -136,7 +136,7 @@
     <value>EPI Server Classes like  PartialContentController or BlockController will be replaced</value>
   </data>
   <data name="EpiDisallowedTypesDescription" xml:space="preserve">
-    <value>EPI Server net5 projects should not reference Mediachase.BusinessFoundation or PropertyData.ParseToObject types.</value>
+    <value>EPI Server net5 projects should not reference Mediachase.BusinessFoundation or PropertyData.ParseToObject types</value>
   </data>
   <data name="EpiDisallowedTypesMessageFormat" xml:space="preserve">
     <value>Type '{0}' should not be referenced in EPI net5 projects</value>
@@ -144,8 +144,17 @@
   <data name="EpiDisallowedTypesTitle" xml:space="preserve">
     <value>EPI Server net5 projects should no longer use type like ParseToObject</value>
   </data>
+  <data name="EpiObsoleteUsingDescription" xml:space="preserve">
+    <value>Obsolete using statements should be removed.</value>
+  </data>
+  <data name="EpiObsoleteUsingMessageFormat" xml:space="preserve">
+    <value>Using statement {0} should be removed</value>
+  </data>
+  <data name="EpiObsoleteUsingTitle" xml:space="preserve">
+    <value>Remove obsolete usings</value>
+  </data>
   <data name="MakeConstDescription" xml:space="preserve">
-    <value>Variables that are not set after they are created should be marked as constant.</value>
+    <value>Variables that are not set after they are created should be marked as constant</value>
   </data>
   <data name="MakeConstMessageFormat" xml:space="preserve">
     <value>Variable '{0}' should be marked const</value>
