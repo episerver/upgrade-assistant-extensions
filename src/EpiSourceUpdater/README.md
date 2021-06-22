@@ -21,17 +21,17 @@ eg.
 ![Screenshot with EPI Server Extension](./images/Epi-Extension-items.jpg)
  
 ## Execution
-open up Developer Command line Tool: 
+Open up "Developer Command line Tool". 
 
-run the upgrade-assistant tool by referencing the EPI Extension 
-Specify the either The Solution or Project you want to upgrade, and add the --extension parameter with the path the EPI Server Extension.
+Run the "upgrade-assistant" tool by referencing the EPI Server Extension.
+Specify either the Solution (.sln) or Project (.csproj) you want to upgrade, and add the --extension parameter with the path to the EPI Server Extension.
 
-upgrade-assistant upgrade C:\Data\CustomerProjects\EPI\demoApptoUpgrade\WepApp1\WepApp1\WepApp1.csproj  **--extension "C:\EPI-Extension**"
+upgrade-assistant upgrade C:\<full-path>\DemoProject.csproj  **--extension "C:\EPI-Extension**"
 
 ![Screenshot with EPI Server Extension](./images/Upgrade-Assistant-with-Epi-Extension.jpg)
 
 ### Capabilities
-The EPI Server Extension provides a couple of EPI Specific capabilities: 
+The EPI Server Extension provides some EPIServer specific capabilities: 
 
 
 - Type Mapping
