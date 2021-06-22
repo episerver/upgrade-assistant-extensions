@@ -31,7 +31,7 @@ upgrade-assistant upgrade C:\Data\CustomerProjects\EPI\demoApptoUpgrade\WepApp1\
 ![Screenshot with EPI Server Extension](./images/Upgrade-Assistant-with-Epi-Extension.jpg)
 
 ### Capabilities
-The EPI Server Extension provides a couple of EPI Secific capabilits: 
+The EPI Server Extension provides a couple of EPI Specific capabilities: 
 
 
 - Type Mapping
@@ -39,6 +39,7 @@ The EPI Server Extension provides a couple of EPI Secific capabilits:
 - String Replacement 
 - Remove PropertyData.ParseToObject method 
 - Remove Default Argument for the TemplateDescriptor Attribute 
+- Remove obsolete using statements
 
 ### Confuguration
 Type and Base Class Mapping and also String Replacements can be configured and can therefore be used for other mappings as well. 
