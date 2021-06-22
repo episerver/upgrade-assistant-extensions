@@ -8,7 +8,7 @@ The Extension is an addon which analyzes and updates Source Files, specified in 
 
 ## Installation
 
-### Upgrade Assitantan
+### Upgrade Assistant
 Install the upgrade-assistant dotnet tool from [Upgrade-Asstant](https://dotnet.microsoft.com/platform/upgrade-assistant)
 **dotnet tool install -g upgrade-assistant**
 
