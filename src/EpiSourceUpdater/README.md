@@ -22,7 +22,7 @@ eg.
  from ..\src\SourceUpdater\bin\Debug\netstandard2.0  to  c:\EPI-Extension\  
 ![Screenshot with EPI Server Extension](./images/Epi-Extension-items.jpg)
 
-Or also zip does File into a .zip File, eg. EPI.SourceCode.Updater.zip.  
+Or also zip those Files into a .zip File, eg. EPI.SourceCode.Updater.zip.  
 This Zip File might be a good way of how to distribute the EPI Server extension to the customers. 
 
  
