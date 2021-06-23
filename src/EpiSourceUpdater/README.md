@@ -11,6 +11,8 @@ The Extension is an addon which analyzes and updates Source Files, specified in 
 ### Upgrade Assistant
 Install the upgrade-assistant dotnet tool from [Upgrade-Asstant](https://dotnet.microsoft.com/platform/upgrade-assistant)
 **dotnet tool install -g upgrade-assistant**
+Update the upgrade-assistant to a newer version. 
+**dotnet tool update -g upgrade-assistant**
 
 ### Epi Server Extension
 Download Source Code and Rebuild it using Visual Studion 2019: [EPI Server Upgrade-Assistant-Extension](https://github.com/episerver/upgrade-assistant-extensions/tree/develop) 
@@ -19,6 +21,10 @@ If successfully rebuilt, take the extension Files and copy them to another place
 eg. 
  from ..\src\SourceUpdater\bin\Debug\netstandard2.0  to  c:\EPI-Extension\  
 ![Screenshot with EPI Server Extension](./images/Epi-Extension-items.jpg)
+
+Or also zip does File into a .zip File, eg. EPI.SourceCode.Updater.zip.  
+This Zip File might be a good way of how to distribute the EPI Server extension to the customers. 
+
  
 ## Execution
 Open up "Developer Command line Tool". 
@@ -27,6 +33,9 @@ Run the "upgrade-assistant" tool by referencing the EPI Server Extension.
 Specify either the Solution (.sln) or Project (.csproj) you want to upgrade, and add the --extension parameter with the path to the EPI Server Extension.
 
 upgrade-assistant upgrade C:\<full-path>\DemoProject.csproj  **--extension "C:\EPI-Extension**"
+
+using a zip file: 
+upgrade-assistant upgrade C:\<full-path>\DemoProject.csproj  **--extension "C:\EPI-Extension\EPI.SourceCode.Updater.zip**"
 
 ![Screenshot with EPI Server Extension](./images/Upgrade-Assistant-with-Epi-Extension.jpg)
 
