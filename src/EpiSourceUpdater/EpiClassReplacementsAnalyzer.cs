@@ -110,24 +110,27 @@ namespace Epi.Source.Updater
                 return;
             }
 
-            var baseType = classDirective.BaseList.Types.FirstOrDefault();
-            if (baseType is null)
+            foreach (var baseType in classDirective.BaseList.Types)
             {
-                return;
-            }
-
-            var nameOfFirstBaseType = baseType.Type.ToString();
-
-            foreach (var map in mappings)
-            {
-                if (nameOfFirstBaseType.Contains(map.OldName))
+                //var baseType = classDirective.BaseList.Types.FirstOrDefault();
+                if (baseType is null)
                 {
-                    // Store the new identifier name that this identifier should be replaced with for use
-                    // by the code fix provider.
-                    var properties = ImmutableDictionary.Create<string, string?>().Add(NewIdentifierKey, map.NewName);
+                    return;
+                }
 
-                    var diagnosti = Diagnostic.Create(Rule, classDirective.GetLocation(), properties, nameOfFirstBaseType);
-                    context.ReportDiagnostic(diagnosti);
+                var nameOfFirstBaseType = baseType.Type.ToString();
+
+                foreach (var map in mappings)
+                {
+                    if (nameOfFirstBaseType.Contains(map.OldName))
+                    {
+                        // Store the new identifier name that this identifier should be replaced with for use
+                        // by the code fix provider.
+                        var properties = ImmutableDictionary.Create<string, string?>().Add(NewIdentifierKey, map.NewName);
+
+                        var diagnosti = Diagnostic.Create(Rule, baseType.GetLocation(), properties, nameOfFirstBaseType);
+                        context.ReportDiagnostic(diagnosti);
+                    }
                 }
             }
         }

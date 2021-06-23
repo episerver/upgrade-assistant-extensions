@@ -45,7 +45,7 @@ namespace Epi.Source.Updater
             var diagnostic = context.Diagnostics.First();
             var diagnosticSpan = diagnostic.Location.SourceSpan;
 
-            var declaration = root.FindToken(diagnosticSpan.Start).Parent?.AncestorsAndSelf().OfType<ClassDeclarationSyntax>().First();
+            var declaration = root.FindToken(diagnosticSpan.Start).Parent?.AncestorsAndSelf().OfType<BaseTypeSyntax>().First();
 
             if (declaration is null)
             {
@@ -64,37 +64,17 @@ namespace Epi.Source.Updater
             }
         }
 
-        private static async Task<Document> ReplaceClassesAsync(Document document, ClassDeclarationSyntax localDeclaration, string newIdentifier, CancellationToken cancellationToken)
+        private static async Task<Document> ReplaceClassesAsync(Document document, BaseTypeSyntax localDeclaration, string newIdentifier, CancellationToken cancellationToken)
         {
-            // Remove the leading trivia from the local declaration.
-            var firstToken = localDeclaration.GetFirstToken();
-            var leadingTrivia = firstToken.LeadingTrivia;
-            var trimmedLocal = localDeclaration.ReplaceToken(
-                firstToken, firstToken.WithLeadingTrivia(SyntaxTriviaList.Empty));
+            var baseType = localDeclaration;
+            SimpleNameSyntax genericName = (SimpleNameSyntax)baseType.Type;
 
-            var generator = SyntaxGenerator.GetGenerator(document);
-            BaseTypeDeclarationSyntax b;
-       //     var updatedbasedecl = b.WithBaseList(generator.ClassDeclaration);
-       //     //generator.AddBaseType()
-       ////     var updated = localDeclaration.WithBaseList();
+            var newnode = genericName.WithIdentifier(SyntaxFactory.Identifier(newIdentifier));
 
-       //     var newclass = SyntaxFactory.ClassDeclaration((newIdentifier + "<EntryContentBase>");
-       //     newclass.AddMembers(localDeclaration.Members);
-       //     newclass.AddMembers(localDeclaration.Members.ToArry());
-            
-            ClassDeclarationSyntax newNode = localDeclaration;
+            var syntaxTree = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
 
-            var editor = await DocumentEditor.CreateAsync(document, cancellationToken).ConfigureAwait(false);
-
-             
-            // Remove PropertyData ParseToObject method.
-            var oldRoot = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
-
-            //var updatedRoot = oldRoot.ReplaceNode(localDeclaration, newclass);
-
-
-            // Return document with transformed tree.
-            return document.WithSyntaxRoot(oldRoot);
+            SyntaxNode newRoot = syntaxTree!.ReplaceNode(genericName, newnode);
+            return document.WithSyntaxRoot(newRoot);
         }
     }
 }
