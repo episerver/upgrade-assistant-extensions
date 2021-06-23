@@ -14,6 +14,12 @@ Install the upgrade-assistant dotnet tool from [Upgrade-Asstant](https://dotnet.
 Update the upgrade-assistant to a newer version. 
 **dotnet tool update -g upgrade-assistant**
 
+Note: 
+make sure you are using the latest available version of upgrade-assistant. 
+eg. 
+Support for Extension ZIP Files is available from v0.2.231403…… ![image](https://user-images.githubusercontent.com/39339816/123054921-a39f8e80-d405-11eb-83d2-cb61b2e08071.png)
+
+
 ### Epi Server Extension
 Download Source Code and Rebuild it using Visual Studion 2019: [EPI Server Upgrade-Assistant-Extension](https://github.com/episerver/upgrade-assistant-extensions/tree/develop) 
 
