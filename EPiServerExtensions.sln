@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F9838F04-6B4
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EPiServerExtensions", "src\EPiServerExtensions\EPiServerExtensions.csproj", "{6F1B11D8-7948-4BDD-97EF-1548882E77DA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Epi.Source.Updater", "src\SourceUpdater\Epi.Source.Updater.csproj", "{F5753EA0-0EDC-4C8A-B8D5-9BC251EBA9FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Epi.Source.Updater", "src\EpiSourceUpdater\Epi.Source.Updater.csproj", "{F5753EA0-0EDC-4C8A-B8D5-9BC251EBA9FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
