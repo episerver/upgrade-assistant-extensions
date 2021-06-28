@@ -142,6 +142,33 @@ namespace Epi.Source.Updater {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Interface IFindUIConfiguration is no longer supported on EPI Server and will be replaced.
+        /// </summary>
+        internal static string EpiMemberReplacementDescription {
+            get {
+                return ResourceManager.GetString("EpiMemberReplacementDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interface &apos;{0}&apos; will be replaced with &apos;{1}&apos;.
+        /// </summary>
+        internal static string EpiMemberReplacementMessageFormat {
+            get {
+                return ResourceManager.GetString("EpiMemberReplacementMessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EPI Server Framework IFindUIConfiguration will be replaced with FindOptions.
+        /// </summary>
+        internal static string EpiMemberReplacementTitle {
+            get {
+                return ResourceManager.GetString("EpiMemberReplacementTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Obsolete using statements should be removed..
         /// </summary>
         internal static string EpiObsoleteUsingDescription {

@@ -10,11 +10,19 @@
   "FindReplaceOptions": {
     "Replacements": {
       "// TODO": "// Updated todo",
-      "[AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]": "[AcceptVerbs(new string[] {\"GET\",\"POST\" })]"
+      "[AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]": "[AcceptVerbs(new string[] {\"GET\",\"POST\" })]",
+      //"IFindUIConfiguration": "FindOptions",
+      //"findUIConfiguration": "findUIOptions"
     }
   },
 
   "ObsoleteOptions": {
+    "Usings": [
+      "Mediachase.BusinessFoundation"
+    ]
+  },
+
+  "RplaceMembers": {
     "Usings": [
       "Mediachase.BusinessFoundation"
     ]

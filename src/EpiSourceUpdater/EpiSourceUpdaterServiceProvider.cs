@@ -47,6 +47,7 @@ namespace Epi.Source.Updater
             // Analyzers.
             services.Services.AddTransient<DiagnosticAnalyzer, EpiAttributeRemoverAnalyzer>();      // EP0001
             services.Services.AddTransient<DiagnosticAnalyzer, EpiClassReplacementsAnalyzer>();     // EP0002
+            services.Services.AddTransient<DiagnosticAnalyzer, EpiMemberReplacementAnalyzer>();         // EP0003
             services.Services.AddTransient<DiagnosticAnalyzer, EpiObsoleteTypesAnalyzer>();         // EP0004
             services.Services.AddTransient<DiagnosticAnalyzer, TypeUpgradeAnalyzer>();              // EP0005
             services.Services.AddTransient<DiagnosticAnalyzer, EpiObsoleteUsingAnalyzer>();         // EP0006
@@ -58,6 +59,7 @@ namespace Epi.Source.Updater
             // Code Fixers.
             services.Services.AddTransient<CodeFixProvider, EpiAttributeRemoverCodeFixProvider>();  // EP0001
             services.Services.AddTransient<CodeFixProvider, EpiClassReplacementsCodeFixProvider>(); // EP0002
+            services.Services.AddTransient<CodeFixProvider, EpiMemberReplacementCodeFixProvider>();     // EP0003
             services.Services.AddTransient<CodeFixProvider, EpiObsoleteTypesCodeFixProvider>();     // EP0004
             services.Services.AddTransient<CodeFixProvider, TypeUpgradeCodeFixProvider>();          // EP0005
             services.Services.AddTransient<CodeFixProvider, EpiObsoleteUsingCodeFixProvider>();     // EP0006

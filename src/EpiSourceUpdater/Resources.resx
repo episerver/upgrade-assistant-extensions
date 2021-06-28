@@ -144,6 +144,15 @@
   <data name="EpiDisallowedTypesTitle" xml:space="preserve">
     <value>EPI Server net5 projects should no longer use type like ParseToObject</value>
   </data>
+  <data name="EpiMemberReplacementDescription" xml:space="preserve">
+    <value>The Interface IFindUIConfiguration is no longer supported on EPI Server and will be replaced</value>
+  </data>
+  <data name="EpiMemberReplacementMessageFormat" xml:space="preserve">
+    <value>Interface '{0}' will be replaced with '{1}'</value>
+  </data>
+  <data name="EpiMemberReplacementTitle" xml:space="preserve">
+    <value>EPI Server Framework IFindUIConfiguration will be replaced with FindOptions</value>
+  </data>
   <data name="EpiObsoleteUsingDescription" xml:space="preserve">
     <value>Obsolete using statements should be removed.</value>
   </data>
