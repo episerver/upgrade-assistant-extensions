@@ -31,7 +31,7 @@ namespace Epi.Source.Updater
         /// <summary>
         /// The diagnostic ID for diagnostics produced by this analyzer.
         /// </summary>
-        public const string DiagnosticId = "EP0006";
+        public const string DiagnosticId = "EP0005";
 
         /// <summary>
         /// Key name for the diagnostic property containing the full name of the type
