@@ -99,37 +99,47 @@ namespace Epi.Source.Updater
             //}
 
          
-
-            var memberDeclaration = (CSSyntax.MemberDeclarationSyntax)context.Node;
-
-
             if (context.Node.Kind() == SyntaxKind.ClassDeclaration)
             {
                 var constructSymbol = context.SemanticModel.GetDeclaredSymbol(context.Node);
-                var newArgumentListArguments = new SeparatedSyntaxList<CSSyntax.ArgumentSyntax>();
-
-
+  
                 if (context.Node.ChildNodes().Count() > 0)
                 {
-                    var constructor = (CSSyntax.ConstructorDeclarationSyntax)
-               context.Node.ChildNodes().First(n => n.Kind() == SyntaxKind.ConstructorDeclaration);
-                    var parameters = constructor.ParameterList
-                .ChildNodes()
-                .Cast<CSSyntax.ParameterSyntax>()
-                .OrderBy(node => ((CSSyntax.IdentifierNameSyntax)node.Type).Identifier.ToString())
-                .Select(node => SyntaxFactory.Parameter(
-                    SyntaxFactory.List<CSSyntax.AttributeListSyntax>(),
-                    SyntaxFactory.TokenList(),
-                    SyntaxFactory.ParseTypeName(((CSSyntax.IdentifierNameSyntax)node.Type).Identifier.Text),
-                    SyntaxFactory.Identifier(node.Identifier.Text),
-                    null));
+                    var constructor = context.Node.ChildNodes().FirstOrDefault(n => n.Kind() == SyntaxKind.ConstructorDeclaration);
+                    if (constructor != null)
+                    {
 
-                    var updatedParameterList = SyntaxFactory.ParameterList(SyntaxFactory.SeparatedList(parameters));
+                        var parameters = ((CSSyntax.ConstructorDeclarationSyntax)constructor).ParameterList
+                    .ChildNodes()
+                    .Cast<CSSyntax.ParameterSyntax>()
+                    .Where(node => node.Type.ToString() == "IFindUIConfiguration"
+                    );
 
-                    var repl = ((SyntaxNode)constructor).ReplaceNode(constructor.ParameterList, updatedParameterList);
-
+                        if (parameters.Count() > 0)
+                        {
+                            var diagnostic = Diagnostic.Create(Rule, constructor.GetLocation(), constructor);
+                            context.ReportDiagnostic(diagnostic);
+                        }
+                  }
                 }
 
+            }
+
+            if (context.Node.Kind() == SyntaxKind.FieldDeclaration)
+            {
+                 if (context.Node.ChildNodes().Count() > 0)
+                {
+                    var fielddeclaration = context.Node.ChildNodes().FirstOrDefault(n => n.Kind() == SyntaxKind.VariableDeclaration);
+                    if (fielddeclaration != null)
+                    {
+                        var field = ((CSSyntax.VariableDeclarationSyntax)fielddeclaration).Type.ToString();
+                        if (!string.IsNullOrEmpty(field) && field == "IFindUIConfiguration")
+                        {
+                            var diagnostic = Diagnostic.Create(Rule, fielddeclaration.GetLocation(), fielddeclaration);
+                            context.ReportDiagnostic(diagnostic);
+                        }
+                    }
+                }
             }
 
 

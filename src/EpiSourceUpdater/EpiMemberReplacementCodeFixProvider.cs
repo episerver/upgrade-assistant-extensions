@@ -42,52 +42,58 @@ namespace Epi.Source.Updater
             }
 
             var diagnostic = context.Diagnostics.First();
-            var diagnosticSpan = diagnostic.Location.SourceSpan;
-
-            var memberDeclaration = root.FindToken(diagnosticSpan.Start).Parent?.AncestorsAndSelf().OfType<MemberDeclarationSyntax>().First();
-
-            if (memberDeclaration is null)
+            foreach(var diag in context.Diagnostics)
             {
-                return;
+                var nam = diag.Id;
+
+
             }
 
-            var construnctorDeclaration = root.FindToken(diagnosticSpan.Start).Parent?.AncestorsAndSelf().OfType<ConstructorDeclarationSyntax>().First();
+            var diagnosticSpan = diagnostic.Location.SourceSpan;
 
-            if (construnctorDeclaration is null)
+            var memberDeclaration = root.FindToken(diagnosticSpan.Start).Parent?.AncestorsAndSelf().OfType<VariableDeclarationSyntax>().FirstOrDefault();
+            var construnctorDeclaration = root.FindToken(diagnosticSpan.Start).Parent?.AncestorsAndSelf().OfType<ConstructorDeclarationSyntax>().FirstOrDefault();
+
+            if (construnctorDeclaration is null && memberDeclaration is null)
             {
                 return;
             }
 
             // Register a code action that will invoke the fix.
-            context.RegisterCodeFix(
-                CodeAction.Create(
-                    Resources.EpiMemberReplacementTitle,
-                    c => ReplaceMamberAsync(context.Document, memberDeclaration, c),
-                    nameof(Resources.EpiMemberReplacementTitle)),
-                diagnostic);
+            if (memberDeclaration != null)
+            {
+               
+               context.RegisterCodeFix(
+                  CodeAction.Create(
+                      Resources.EpiMemberReplacementTitle,
+                      c => ReplaceFieldAsync(context.Document, memberDeclaration, c),
+                      nameof(Resources.EpiMemberReplacementTitle)),
+                  diagnostic);
+            }
 
-            context.RegisterCodeFix(
-                CodeAction.Create(
-                    Resources.EpiMemberReplacementTitle,
-                    c => ReplaceConstructorAsync(context.Document, construnctorDeclaration, c),
-                    nameof(Resources.EpiMemberReplacementTitle)),
-                diagnostic);
+            if (construnctorDeclaration != null)
+            {
+                context.RegisterCodeFix(
+                    CodeAction.Create(
+                        Resources.EpiMemberReplacementTitle,
+                        c => ReplaceConstructorAsync(context.Document, construnctorDeclaration, c),
+                        nameof(Resources.EpiMemberReplacementTitle)),
+                    diagnostic);
+            }
         }
 
-        private static async Task<Document> ReplaceMamberAsync(Document document, MemberDeclarationSyntax localDeclaration, CancellationToken cancellationToken)
+        private static async Task<Document> ReplaceFieldAsync(Document document, VariableDeclarationSyntax localDeclaration, CancellationToken cancellationToken)
         {
             // Remove PropertyData ParseToObject method.
             var oldRoot = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
-            var newRoot = oldRoot!.RemoveNode(localDeclaration, SyntaxRemoveOptions.AddElasticMarker);
 
-    //        ConstructorDeclaration("TestClientApi")
-    //.WithInitializer(
-    //    ConstructorInitializer(SyntaxKind.BaseConstructorInitializer)
-    //        // could be BaseConstructorInitializer or ThisConstructorInitializer
-    //        .AddArgumentListArguments(
-    //            Argument(IdentifierName("entryPoint"))
-    //        )
-    //)
+            var baseType = localDeclaration;
+            SimpleNameSyntax genericName = (SimpleNameSyntax)baseType.Type;
+
+            var newnode = genericName.WithIdentifier(SyntaxFactory.Identifier("FindOptions"));
+
+            SyntaxNode newRoot = oldRoot!.ReplaceNode(genericName, newnode);
+
 
             // Return document with transformed tree.
             return document.WithSyntaxRoot(newRoot);
@@ -95,12 +101,40 @@ namespace Epi.Source.Updater
 
         private static async Task<Document> ReplaceConstructorAsync(Document document, ConstructorDeclarationSyntax localDeclaration, CancellationToken cancellationToken)
         {
-            // Remove PropertyData ParseToObject method.
+            // Replace Contructor Parameter with new Type.
             var oldRoot = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
-            var newRoot = oldRoot!.RemoveNode(localDeclaration, SyntaxRemoveOptions.AddElasticMarker);
+            var newNode = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
 
-            // Return document with transformed tree.
-            return document.WithSyntaxRoot(newRoot);
+
+            var parameters = ((ConstructorDeclarationSyntax)localDeclaration).ParameterList
+                .ChildNodes()
+                .Cast<ParameterSyntax>()
+                .Where(node => node.Type.ToString() == "IFindUIConfiguration"
+                );
+
+            if (parameters == null)
+            {
+                return document;
+            }
+
+            if (parameters.Count() > 0)
+            {
+                var param = parameters.First();
+                ParameterSyntax genericName = (ParameterSyntax)param;
+                var newParam = genericName.WithType(SyntaxFactory.IdentifierName("FindOptions"));
+                newNode = oldRoot!.ReplaceNode(param, newParam);
+
+                //Using Constructor declaration 
+                //ConstructorDeclarationSyntax newConst = localDeclaration.RemoveNode(param, SyntaxRemoveOptions.AddElasticMarker);
+                //newConst = newConst.AddParameterListParameters(newParam);
+                //newNode = oldRoot!.ReplaceNode(localDeclaration, newConst);
+
+            }
+
+           
+            return document.WithSyntaxRoot(newNode);
+
+
         }
     }
 }
