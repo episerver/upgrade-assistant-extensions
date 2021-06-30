@@ -42,15 +42,7 @@ namespace Epi.Source.Updater
             }
 
             var diagnostic = context.Diagnostics.First();
-            foreach(var diag in context.Diagnostics)
-            {
-                var nam = diag.Id;
-
-
-            }
-
             var diagnosticSpan = diagnostic.Location.SourceSpan;
-
             var memberDeclaration = root.FindToken(diagnosticSpan.Start).Parent?.AncestorsAndSelf().OfType<VariableDeclarationSyntax>().FirstOrDefault();
             var construnctorDeclaration = root.FindToken(diagnosticSpan.Start).Parent?.AncestorsAndSelf().OfType<ConstructorDeclarationSyntax>().FirstOrDefault();
 
@@ -62,7 +54,6 @@ namespace Epi.Source.Updater
             // Register a code action that will invoke the fix.
             if (memberDeclaration != null)
             {
-               
                context.RegisterCodeFix(
                   CodeAction.Create(
                       Resources.EpiMemberReplacementTitle,
@@ -84,18 +75,16 @@ namespace Epi.Source.Updater
 
         private static async Task<Document> ReplaceFieldAsync(Document document, VariableDeclarationSyntax localDeclaration, CancellationToken cancellationToken)
         {
-            // Remove PropertyData ParseToObject method.
+            // Replace Field Declaration with new Type.
             var oldRoot = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
 
             var baseType = localDeclaration;
             SimpleNameSyntax genericName = (SimpleNameSyntax)baseType.Type;
 
             var newnode = genericName.WithIdentifier(SyntaxFactory.Identifier("FindOptions"));
-
             SyntaxNode newRoot = oldRoot!.ReplaceNode(genericName, newnode);
 
-
-            // Return document with transformed tree.
+            // Return document with transformed type.
             return document.WithSyntaxRoot(newRoot);
         }
 
@@ -103,8 +92,7 @@ namespace Epi.Source.Updater
         {
             // Replace Contructor Parameter with new Type.
             var oldRoot = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
-            var newNode = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
-
+            var newNode = oldRoot;
 
             var parameters = ((ConstructorDeclarationSyntax)localDeclaration).ParameterList
                 .ChildNodes()
@@ -121,20 +109,11 @@ namespace Epi.Source.Updater
             {
                 var param = parameters.First();
                 ParameterSyntax genericName = (ParameterSyntax)param;
-                var newParam = genericName.WithType(SyntaxFactory.IdentifierName("FindOptions"));
+                var newParam = genericName.WithType(SyntaxFactory.IdentifierName("FindOptions").WithTriviaFrom(genericName.Type));
                 newNode = oldRoot!.ReplaceNode(param, newParam);
-
-                //Using Constructor declaration 
-                //ConstructorDeclarationSyntax newConst = localDeclaration.RemoveNode(param, SyntaxRemoveOptions.AddElasticMarker);
-                //newConst = newConst.AddParameterListParameters(newParam);
-                //newNode = oldRoot!.ReplaceNode(localDeclaration, newConst);
-
             }
-
-           
+            // Return document with transformed Parameter.
             return document.WithSyntaxRoot(newNode);
-
-
         }
     }
 }

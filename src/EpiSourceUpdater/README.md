@@ -76,12 +76,19 @@ and Tamplates for Program.cs and Startup.cs as they are required by .NET 5.0 can
 some features as below are not configurable and will be executed, you can still skip the execution during the dialog.
 
 - Remove Default Argument for the TemplateDescriptor Attribute 
-- Remove obsolete using statements
-- Remove obsolete method overrideusing statements
+- Remove obsolete method override ParseToObject method
 - Replace IFindUIConfiguration with FindOptions 
 
 ### Configuration
 Type, Base Class Mapping, Packages, Templates and also String Replacements can be configured.  
+There are two different mapping file sources  
+ 
+- EpiTypeReplacements.typemap
+- EpiClassReplacements.classmap 
+
+where .typemap is focused on replacing using statements and .classmap is focused on replaceing base class inheriteances. 
+
+Although one file could have been enough to handle both replacement types, a clear separtion of dueties brings more clarity. 
 
 #### Specify new EPI related Types in the **.typemap** File, by adding the old type space/tab followed by the new type:
 
@@ -100,7 +107,7 @@ Type, Base Class Mapping, Packages, Templates and also String Replacements can b
 #### Replace any strings you want.  This a quick and dirty approach if you want to have any source code quickly replaced by anything else.  
 Update the **ExtensionManifest.json** File and specify old value followed by the new Value. This could also be used if you want to comment out some lines. Eg. 
 
-samples:
+Current:
 
     "FindReplaceOptions": {  
     "Replacements": {  
@@ -151,7 +158,6 @@ see actual content below:
     
       "FindReplaceOptions": {
     "Replacements": {
-      "// TODO": "// Updated todo",
       "[AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]": "[AcceptVerbs(new string[] {\"GET\",\"POST\" })]"
     }
       },

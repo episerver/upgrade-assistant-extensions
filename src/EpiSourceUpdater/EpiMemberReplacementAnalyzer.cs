@@ -76,29 +76,6 @@ namespace Epi.Source.Updater
         /// <param name="context">The syntax node analysis context including the identifier node to analyze.</param>
         private void AnalyzeUsingDirectives(SyntaxNodeAnalysisContext context)
         {
-            Compilation compilation = context.Compilation;
-
-            INamedTypeSymbol myType = compilation.GetTypeByMetadataName("EPiServer.Find.UI.FindUIConfiguration");
-            if (myType != null)
-            {
-
-                var members = myType.GetMembers();
-                foreach(var memb in myType.GetMembers())
-                {
-
-                    var nam = memb.Name;
-
-                }
-            }
-            //var found = myType.AllInterfaces.Any(i => myType.Equals(i));
-
-            //var classDirective = (CSSyntax.ClassDeclarationSyntax)context.Node;
-            //if (classDirective is null)
-            //{
-            //    return;
-            //}
-
-         
             if (context.Node.Kind() == SyntaxKind.ClassDeclaration)
             {
                 var constructSymbol = context.SemanticModel.GetDeclaredSymbol(context.Node);
@@ -109,7 +86,7 @@ namespace Epi.Source.Updater
                     if (constructor != null)
                     {
 
-                        var parameters = ((CSSyntax.ConstructorDeclarationSyntax)constructor).ParameterList
+                    var parameters = ((CSSyntax.ConstructorDeclarationSyntax)constructor).ParameterList
                     .ChildNodes()
                     .Cast<CSSyntax.ParameterSyntax>()
                     .Where(node => node.Type.ToString() == "IFindUIConfiguration"
@@ -117,12 +94,14 @@ namespace Epi.Source.Updater
 
                         if (parameters.Count() > 0)
                         {
-                            var diagnostic = Diagnostic.Create(Rule, constructor.GetLocation(), constructor);
-                            context.ReportDiagnostic(diagnostic);
+                            foreach (var param in parameters)
+                            {
+                                var diagnostic = Diagnostic.Create(Rule, constructor.GetLocation(), parameters.First().Type.ToString());
+                                context.ReportDiagnostic(diagnostic);
+                            }
                         }
                   }
                 }
-
             }
 
             if (context.Node.Kind() == SyntaxKind.FieldDeclaration)
@@ -135,84 +114,12 @@ namespace Epi.Source.Updater
                         var field = ((CSSyntax.VariableDeclarationSyntax)fielddeclaration).Type.ToString();
                         if (!string.IsNullOrEmpty(field) && field == "IFindUIConfiguration")
                         {
-                            var diagnostic = Diagnostic.Create(Rule, fielddeclaration.GetLocation(), fielddeclaration);
+                            var diagnostic = Diagnostic.Create(Rule, fielddeclaration.GetLocation(), field);
                             context.ReportDiagnostic(diagnostic);
                         }
                     }
                 }
             }
-
-
-
-            //if (memberDeclaration is null)
-            //{
-            //    return;
-            //}
-
-            if (context.Node.Kind() == SyntaxKind.FieldDeclaration || context.Node.Kind() == SyntaxKind.ConstructorDeclaration)
-            {
-
-                var namen = context.Node;
-            }
-
-            return;
-
-
-
-            bool Implements(INamedTypeSymbol symbol, ITypeSymbol type)
-            {
-                return symbol.AllInterfaces.Any(i => type.Equals(i));
-            }
-
-            SemanticModel semanticModel = context.SemanticModel;
-            var typeSyntax = (CSSyntax.ClassDeclarationSyntax)context.Node; // ModuleStatementSyntxt; //ClassStatementSyntax, ModuleStatementSyntxt or NamespaceStatementSyntax
-            string name = null;
-            int startLine;
-            int endLine;
-
-            var info = semanticModel.GetSymbolInfo(typeSyntax);
-            if (info.Symbol is INamespaceOrTypeSymbol typeSymbol)
-            {
-                name = typeSymbol.Name; // retrieve Name
-                startLine = semanticModel.SyntaxTree.GetLineSpan(typeSymbol.DeclaringSyntaxReferences[0].Span).StartLinePosition.Line; //retrieve start line
-                endLine = semanticModel.SyntaxTree.GetLineSpan(typeSymbol.DeclaringSyntaxReferences[0].Span).EndLinePosition.Line; //retrieve end line
-                foreach (var item in typeSymbol.GetMembers())
-                {
-                    var nnn = item.Name;
-                    // do the same logic for retrieving name and lines for all others members without calling GetMembers()
-                }
-            }
-            else if (semanticModel.GetDeclaredSymbol(typeSyntax) is INamespaceOrTypeSymbol typeSymbol2)
-            {
-                name = typeSymbol2.Name; // retrieve Name
-                startLine = semanticModel.SyntaxTree.GetLineSpan(typeSymbol2.DeclaringSyntaxReferences[0].Span).StartLinePosition.Line; //retrieve start line
-                endLine = semanticModel.SyntaxTree.GetLineSpan(typeSymbol2.DeclaringSyntaxReferences[0].Span).EndLinePosition.Line; //retrieve end line
-
-                foreach (var item in typeSymbol2.GetMembers())
-                {
-                    // do the same logic for retrieving name and lines for all others members without calling GetMembers()
-                }
-            }
-
-  //          var filedDeclaration = (CSSyntax.FieldDeclarationSyntax)context.Node;
-
-
-            //var constructorDeclaration = new CSSyntax.ConstructorDeclarationSyntax(  x(();
-            //if (context.Node.IsKind(SyntaxKind.ConstructorDeclaration))
-            //{
-            //    var constructorDeclaration = (CSSyntax.ConstructorDeclarationSyntax)context.Node;
-
-            //    if (constructorDeclaration is null)
-            //    {
-            //        return;
-            //    }
-            //}
-            //var diagnosti = Diagnostic.Create(Rule, memberDeclaration.GetLocation(), memberDeclaration);
-            //context.ReportDiagnostic(diagnosti);
-
-
-            //diagnosti = Diagnostic.Create(Rule, constructorDeclaration.GetLocation(), constructorDeclaration);
-            //context.ReportDiagnostic(diagnosti);
         }
     }
 }

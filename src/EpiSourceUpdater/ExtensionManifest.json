@@ -16,7 +16,6 @@
 
   "FindReplaceOptions": {
     "Replacements": {
-      "// TODO": "// Updated todo",
       "[AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]": "[AcceptVerbs(new string[] {\"GET\",\"POST\" })]"
     }
   },
