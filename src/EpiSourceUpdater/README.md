@@ -128,6 +128,59 @@ go to the PackageMaps/EPIServerPackageMaps.json file and configure required pack
 the Program.cs and the Starup.cs are important Templates required by ASP.NET core projects. They will automatically be added to the project if not already existing.
 go to Templates\EPiServerTemplates and customize the Program.cs and the Startup.cs to your needs. 
 
+####ExtensionManifest.json
+This is the main configuration file. Types which should be removed, string replacement, Packagemanagement and Templates are all configured here. That the upgrade-assistant is loading the EPI.Source.Updater extension is also caused by this config file. 
+see actual content below:
+
+{
+  // This optional property gives a friendly name used for the extension
+  // while running and logging output from Upgrade Assistant.
+  "ExtensionName": "EPI Source updater extension",
+
+  //PackageUpdater and TemplateInserter comented out for now, as packes and Template should be reviewed by Optimizely. 
+  //"PackageUpdater": {
+  //  "PackageMapPath": "PackageMaps"
+  //},
+
+  //"TemplateInserter": {
+  //  "TemplateConfigFiles": [
+  //    "Templates\\EPiServerTemplates\\TemplateConfig.json"
+  //  ]
+  //},
+
+  "FindReplaceOptions": {
+    "Replacements": {
+      "// TODO": "// Updated todo",
+      "[AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]": "[AcceptVerbs(new string[] {\"GET\",\"POST\" })]"
+    }
+  },
+
+  "ObsoleteOptions": {
+    "Usings": [
+      "Mediachase.BusinessFoundation"
+    ]
+  },
+
+
+  "SourceUpdater": {
+    "AdditionalAnalyzerTexts": [
+      "EpiTypeReplacements.typemap",
+      "EpiClassReplacements.classmap"
+    ]
+  },
+
+  "ConfigUpdater": {
+    "ConfigFilePaths": [
+      "app.config"
+    ]
+  },
+
+  "ExtensionServiceProviders": [
+    "Epi.Source.Updater.dll"
+  ]
+}
+
+
 
 
 ## General Description ##
