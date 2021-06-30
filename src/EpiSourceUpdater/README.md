@@ -1,9 +1,7 @@
 # Upgrade Assistant source updater with EPI Server extension
 
-This demonstrates how to add and execute the EPI SErver Extension. 
-The Extension is an addon which analyzes and updates Source Files, specified in he EPI SErve extension. 
-
-
+This demonstrates how to add and execute the EPI Server Extension. 
+The Extension is an addon which analyzes and updates Source Files eg. for the EPI Server Foundation project. 
 
 
 ## Installation
@@ -21,7 +19,7 @@ Support for Extension ZIP Files is available from v0.2.231403…… ![image](htt
 
 
 ### Epi Server Extension
-Download Source Code and Rebuild it using Visual Studion 2019: [EPI Server Upgrade-Assistant-Extension](https://github.com/episerver/upgrade-assistant-extensions/tree/develop) 
+Download Source Code and rebuild it using Visual Studio 2019: [EPI Server Upgrade-Assistant-Extension](https://github.com/episerver/upgrade-assistant-extensions/tree/develop) 
 
 If successfully rebuilt, take the extension Files and copy them to another place on your local machine: 
 eg. 
@@ -29,7 +27,7 @@ eg.
 ![Screenshot with EPI Server Extension](./images/Epi-Extension-items.jpg)
 
 Or also zip those Files into a .zip File, eg. EPI.SourceCode.Updater.zip.  
-This Zip File might be a good way of how to distribute the EPI Server extension to the customers. 
+This Zip File might then be provided be a good way of how to distribute the EPI Server extension to the customers. 
 
  
 ## Execution
@@ -43,56 +41,92 @@ upgrade-assistant upgrade C:\<full-path>\DemoProject.csproj  **--extension "C:\E
 using a zip file: 
 upgrade-assistant upgrade C:\<full-path>\DemoProject.csproj  **--extension "C:\EPI-Extension\EPI.SourceCode.Updater.zip**"
 
+The Upgrade-assistant starts and you'll notice at the bottom that it tells you that strings are found to be replaced.
+String you want ot replace are configured in the ExtensionManifest.json file. see below.
+![Screenshot with EPI Server Extension](./images/UA-Started.jpg)
+
+The upgrade-assistant will show additional Update source code steps "apply fix for", where the extension analyzers have found areas such updates are to be applied. 
+these are 5 additional code fixes identified with EP0001 - EP0005, representing EP = EPI Server related fixes. 
+
+UA0002 is an out of the box update step, but the EPI Server Type mappings see below, are executed during this step. 
+
 ![Screenshot with EPI Server Extension](./images/Upgrade-Assistant-with-Epi-Extension.jpg)
 
 ### Capabilities
 The EPI Server Extension provides some EPIServer specific capabilities: 
 
+1. String Replacement 
+2. Remove Default Argument for the TemplateDescriptor Attribute
+2. Base Class Mapping
+3. Replace IFindUIConfiguration with FindOptions 
+4. Remove PropertyData ParseToObject method overrides
+5. Remove obsolete using statements like Mediachase.BusinessFoundation
+6. Type Mapping like EPiServer.Web.Routing to EPiServer.Core.Routing 
 
-- Type Mapping
-- Base Class Mapping  
-- String Replacement 
-- Remove PropertyData.ParseToObject method 
+Additionaly Nuget Packages can be specified: 
+
+"Name": "EPiServer.CMS.Core",
+"Version": "11.99.99"
+
+and Tamplates for Program.cs and Startup.cs as they are required by .NET 5.0 can be added as well.
+
+
+### Not Configurable
+some features as below are not configurable and will be executed, you can still skip the execution during the dialog.
+
 - Remove Default Argument for the TemplateDescriptor Attribute 
 - Remove obsolete using statements
+- Remove obsolete method overrideusing statements
+- Replace IFindUIConfiguration with FindOptions 
 
 ### Confuguration
-Type and Base Class Mapping and also String Replacements can be configured and can therefore be used for other mappings as well. 
+Type, Base Class Mapping, Packages, Templates and also String Replacements can be configured.  
 
-Specify new EPI repalted Types in the .typemap File, by adding the old type space/tab followed by the new type:
+####Specify new EPI related Types in the **.typemap** File, by adding the old type space/tab followed by the new type:
 
-`# These mappings represent EPI Server types that should be replaced when upgrading to ASP.NET Core
+`# These mappings represent EPI Server types that should be replaced when upgrading to .NET 5.0.
 
 EPiServer.Web.Routing	EPiServer.Core.Routing  
 Foundation.Commerce.Markets   Foundation.Infrastructure.Commerce.Markets`
 
-
-Type and Base Class Mapping and also String Replacements can be configured and can therefore be used for other mappings as well. 
-
-Specify new EPI repalted base classes in the .classmap File, by adding the old class space/tab followed by the new class:
+####Specify new EPI related base classes in the **.classmap** File, by adding the old class space/tab followed by the new class:
 
 `# These mappings represent EPI Server base classes that should be replaced when upgrading dotNet 5
 
 BlockController	BlockComponent  
 PartialContentController   PartialContentComponent`
 
-Replace any string you want.  This a quick and dirty approach if you want to have any source code quickly repalced by anything else.  
-Update the ExtensionManifest.json Files and specify old value followed by the new Value. This could also be used if you want to comment out some lines. Eg. 
-
-IFindUIConfiguration findUIConfiguration,   
-//IFindUIConfiguration findUIConfiguration,
+####Replace any strings you want.  This a quick and dirty approach if you want to have any source code quickly replaced by anything else.  
+Update the **ExtensionManifest.json** File and specify old value followed by the new Value. This could also be used if you want to comment out some lines. Eg. 
 
 samples:
 
 `  "FindReplaceOptions": {  
     "Replacements": {  
-      "// TODO": "// Updated todo",  
-      //"[TemplateDescriptor(Default = true)]": "[TemplateDescriptor]",  
-      "[AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]": "[AcceptVerbs(new string[] {\"GET\",\"POST\" })]"
-      //"PartialContentController<": "PartialContentComponent<",
-      //"BlockController<": "BlockComponent<"
+ "[AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]": "[AcceptVerbs(new string[] {\"GET\",\"POST\" })]"
     }
   },`
+
+
+####Package Mamangement 
+go to the PackageMaps/EPIServerPackageMaps.json file and configure required package upgrades and versions as need for .NET 5.0. 
+
+  {
+"PackageSetName": "EPiServer",
+"NetFrameworkPackages": [
+  {
+"Name": "EPiServer.CMS.AspNet",
+"Version": "*"
+  },
+  {
+"Name": "EPiServer.CMS.Core",
+"Version": "11.99.99"
+  },
+
+
+####Templates
+the Program.cs and the Starup.cs are important Templates required by ASP.NET core projects. They will automatically be added to the project if not already existing.
+go to Templates\EPiServerTemplates and customize the Program.cs and the Startup.cs to your needs. 
 
 
 

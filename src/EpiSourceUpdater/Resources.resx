@@ -136,13 +136,13 @@
     <value>EPI Server Classes like  PartialContentController or BlockController will be replaced</value>
   </data>
   <data name="EpiDisallowedTypesDescription" xml:space="preserve">
-    <value>EPI Server net5 projects should not reference Mediachase.BusinessFoundation or PropertyData.ParseToObject types</value>
+    <value>EPI Server .NET 5.0 override PropertyData ParseToObject is no longer required. Functionality can be achieved by creating a new instance and calling the ParsToSelf method.</value>
   </data>
   <data name="EpiDisallowedTypesMessageFormat" xml:space="preserve">
-    <value>Type '{0}' should not be referenced in EPI net5 projects</value>
+    <value>Type '{0}' Method override will be removed</value>
   </data>
   <data name="EpiDisallowedTypesTitle" xml:space="preserve">
-    <value>EPI Server net5 projects should no longer use type like ParseToObject</value>
+    <value>EPI Server .NET 5.0 projects should no longer use overrides for ParseToObject</value>
   </data>
   <data name="EpiMemberReplacementDescription" xml:space="preserve">
     <value>The Interface IFindUIConfiguration is no longer supported on EPI Server and will be replaced</value>
@@ -160,7 +160,7 @@
     <value>Using statement {0} should be removed</value>
   </data>
   <data name="EpiObsoleteUsingTitle" xml:space="preserve">
-    <value>Remove obsolete usings</value>
+    <value>EPI Server Remove obsolete usings like Mediachase.BusinessFoundation</value>
   </data>
   <data name="MakeConstDescription" xml:space="preserve">
     <value>Variables that are not set after they are created should be marked as constant</value>

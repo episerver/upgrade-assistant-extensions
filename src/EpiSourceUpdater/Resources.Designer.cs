@@ -115,7 +115,7 @@ namespace Epi.Source.Updater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to EPI Server net5 projects should not reference Mediachase.BusinessFoundation or PropertyData.ParseToObject types.
+        ///   Looks up a localized string similar to EPI Server .NET 5.0 override PropertyData ParseToObject is no longer required. Functionality can be achieved by creating a new instance and calling the ParsToSelf method..
         /// </summary>
         internal static string EpiDisallowedTypesDescription {
             get {
@@ -124,7 +124,7 @@ namespace Epi.Source.Updater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Type &apos;{0}&apos; should not be referenced in EPI net5 projects.
+        ///   Looks up a localized string similar to Type &apos;{0}&apos; Method override will be removed.
         /// </summary>
         internal static string EpiDisallowedTypesMessageFormat {
             get {
@@ -133,7 +133,7 @@ namespace Epi.Source.Updater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to EPI Server net5 projects should no longer use type like ParseToObject.
+        ///   Looks up a localized string similar to EPI Server .NET 5.0 projects should no longer use overrides for ParseToObject.
         /// </summary>
         internal static string EpiDisallowedTypesTitle {
             get {
@@ -187,7 +187,7 @@ namespace Epi.Source.Updater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove obsolete usings.
+        ///   Looks up a localized string similar to EPI Server Remove obsolete usings like Mediachase.BusinessFoundation.
         /// </summary>
         internal static string EpiObsoleteUsingTitle {
             get {
