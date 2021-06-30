@@ -7,15 +7,16 @@ The Extension is an addon which analyzes and updates Source Files eg. for the EP
 ## Installation
 
 ### Upgrade Assistant
-Install the upgrade-assistant dotnet tool from [Upgrade-Asstant](https://dotnet.microsoft.com/platform/upgrade-assistant)
-**dotnet tool install -g upgrade-assistant**
-Update the upgrade-assistant to a newer version. 
+Install the upgrade-assistant dotnet tool from [Upgrade-Asstant](https://dotnet.microsoft.com/platform/upgrade-assistant)  
+**dotnet tool install -g upgrade-assistant**  
+
+Update the upgrade-assistant to a newer version.  
 **dotnet tool update -g upgrade-assistant**
 
 Note: 
 make sure you are using the latest available version of upgrade-assistant. 
 eg. 
-Support for Extension ZIP Files is available from v0.2.231403…… ![image](https://user-images.githubusercontent.com/39339816/123054921-a39f8e80-d405-11eb-83d2-cb61b2e08071.png)
+Support for Extension ZIP Files is available from **v0.2.231403**
 
 
 ### Epi Server Extension
@@ -79,106 +80,106 @@ some features as below are not configurable and will be executed, you can still 
 - Remove obsolete method overrideusing statements
 - Replace IFindUIConfiguration with FindOptions 
 
-### Confuguration
+### Configuration
 Type, Base Class Mapping, Packages, Templates and also String Replacements can be configured.  
 
-####Specify new EPI related Types in the **.typemap** File, by adding the old type space/tab followed by the new type:
+#### Specify new EPI related Types in the **.typemap** File, by adding the old type space/tab followed by the new type:
 
-`# These mappings represent EPI Server types that should be replaced when upgrading to .NET 5.0.
+    `# These mappings represent EPI Server types that should be replaced when upgrading to .NET 5.0.
+    
+    EPiServer.Web.Routing	EPiServer.Core.Routing  
+    Foundation.Commerce.Markets   Foundation.Infrastructure.Commerce.Markets`
 
-EPiServer.Web.Routing	EPiServer.Core.Routing  
-Foundation.Commerce.Markets   Foundation.Infrastructure.Commerce.Markets`
+#### Specify new EPI related base classes in the **.classmap** File, by adding the old class space/tab followed by the new class:
 
-####Specify new EPI related base classes in the **.classmap** File, by adding the old class space/tab followed by the new class:
+    `# These mappings represent EPI Server base classes that should be replaced when upgrading dotNet 5
+    
+    BlockController	BlockComponent  
+    PartialContentController   PartialContentComponent`
 
-`# These mappings represent EPI Server base classes that should be replaced when upgrading dotNet 5
-
-BlockController	BlockComponent  
-PartialContentController   PartialContentComponent`
-
-####Replace any strings you want.  This a quick and dirty approach if you want to have any source code quickly replaced by anything else.  
+#### Replace any strings you want.  This a quick and dirty approach if you want to have any source code quickly replaced by anything else.  
 Update the **ExtensionManifest.json** File and specify old value followed by the new Value. This could also be used if you want to comment out some lines. Eg. 
 
 samples:
 
-`  "FindReplaceOptions": {  
+    "FindReplaceOptions": {  
     "Replacements": {  
- "[AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]": "[AcceptVerbs(new string[] {\"GET\",\"POST\" })]"
+     "[AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]": "[AcceptVerbs(new string[] {\"GET\",\"POST\" })]"
     }
-  },`
+      },
 
 
-####Package Mamangement 
+#### Package Mamangement 
 go to the PackageMaps/EPIServerPackageMaps.json file and configure required package upgrades and versions as need for .NET 5.0. 
 
-  {
-"PackageSetName": "EPiServer",
-"NetFrameworkPackages": [
-  {
-"Name": "EPiServer.CMS.AspNet",
-"Version": "*"
-  },
-  {
-"Name": "EPiServer.CMS.Core",
-"Version": "11.99.99"
-  },
+      {
+    "PackageSetName": "EPiServer",
+    "NetFrameworkPackages": [
+      {
+    "Name": "EPiServer.CMS.AspNet",
+    "Version": "*"
+      },
+      {
+    "Name": "EPiServer.CMS.Core",
+    "Version": "11.99.99"
+      },
+    
 
-
-####Templates
+#### Templates
 the Program.cs and the Starup.cs are important Templates required by ASP.NET core projects. They will automatically be added to the project if not already existing.
 go to Templates\EPiServerTemplates and customize the Program.cs and the Startup.cs to your needs. 
 
-####ExtensionManifest.json
+#### ExtensionManifest.json
 This is the main configuration file. Types which should be removed, string replacement, Packagemanagement and Templates are all configured here. That the upgrade-assistant is loading the EPI.Source.Updater extension is also caused by this config file. 
 see actual content below:
 
-{
-  // This optional property gives a friendly name used for the extension
-  // while running and logging output from Upgrade Assistant.
-  "ExtensionName": "EPI Source updater extension",
-
-  //PackageUpdater and TemplateInserter comented out for now, as packes and Template should be reviewed by Optimizely. 
-  //"PackageUpdater": {
-  //  "PackageMapPath": "PackageMaps"
-  //},
-
-  //"TemplateInserter": {
-  //  "TemplateConfigFiles": [
-  //    "Templates\\EPiServerTemplates\\TemplateConfig.json"
-  //  ]
-  //},
-
-  "FindReplaceOptions": {
+    {
+      // This optional property gives a friendly name used for the extension
+      // while running and logging output from Upgrade Assistant.
+      "ExtensionName": "EPI Source updater extension",
+    
+      //PackageUpdater and TemplateInserter comented out for now, as packes and Template should be reviewed by Optimizely. 
+      //"PackageUpdater": {
+      //  "PackageMapPath": "PackageMaps"
+      //},
+    
+      //"TemplateInserter": {
+      //  "TemplateConfigFiles": [
+      //"Templates\\EPiServerTemplates\\TemplateConfig.json"
+      //  ]
+      //},
+    
+      "FindReplaceOptions": {
     "Replacements": {
       "// TODO": "// Updated todo",
       "[AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]": "[AcceptVerbs(new string[] {\"GET\",\"POST\" })]"
     }
-  },
-
-  "ObsoleteOptions": {
+      },
+    
+      "ObsoleteOptions": {
     "Usings": [
       "Mediachase.BusinessFoundation"
     ]
-  },
-
-
-  "SourceUpdater": {
+      },
+    
+    
+      "SourceUpdater": {
     "AdditionalAnalyzerTexts": [
       "EpiTypeReplacements.typemap",
       "EpiClassReplacements.classmap"
     ]
-  },
-
-  "ConfigUpdater": {
+      },
+    
+      "ConfigUpdater": {
     "ConfigFilePaths": [
       "app.config"
     ]
-  },
-
-  "ExtensionServiceProviders": [
+      },
+    
+      "ExtensionServiceProviders": [
     "Epi.Source.Updater.dll"
-  ]
-}
+      ]
+    }
 
 
 
