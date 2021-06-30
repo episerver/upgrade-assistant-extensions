@@ -3,10 +3,17 @@
   // while running and logging output from Upgrade Assistant.
   "ExtensionName": "EPI Source updater extension",
 
-  // Config settings can be provided for this or other extensions.
-  // Extensions can update config settings used by other extensions
-  // (including the default extensions) with extensions loading later
-  // overriding those loaded earlier.
+  //PackageUpdater and TemplateInserter comented out for now, as packes and Template should be reviewed by Optimizely. 
+  //"PackageUpdater": {
+  //  "PackageMapPath": "PackageMaps"
+  //},
+
+  //"TemplateInserter": {
+  //  "TemplateConfigFiles": [
+  //    "Templates\\EPiServerTemplates\\TemplateConfig.json"
+  //  ]
+  //},
+
   "FindReplaceOptions": {
     "Replacements": {
       "// TODO": "// Updated todo",
@@ -20,7 +27,7 @@
     ]
   },
 
- 
+
   "SourceUpdater": {
     "AdditionalAnalyzerTexts": [
       "EpiTypeReplacements.typemap",

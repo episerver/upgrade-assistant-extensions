@@ -6,10 +6,32 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Templates\EPiServerTemplates\Program.cs" />
+    <Compile Remove="Templates\EPiServerTemplates\Startup.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="PackageMaps\EPiServerPackageMap.json" />
+    <None Remove="Templates\EPiServerTemplates\TemplateConfig.json" />
+  </ItemGroup>
+
   <!-- Be sure the extension's manifest file is copied on build,
        so that it will be present in the extension's binary output. -->
   <ItemGroup>
     <Content Include="ExtensionManifest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PackageMaps\EPiServerPackageMap.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\EPiServerTemplates\Program.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\EPiServerTemplates\Startup.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\EPiServerTemplates\TemplateConfig.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
