@@ -1,0 +1,46 @@
+﻿{
+  // This optional property gives a friendly name used for the extension
+  // while running and logging output from Upgrade Assistant.
+  "ExtensionName": "EPI Source updater extension",
+
+  //PackageUpdater and TemplateInserter comented out for now, as packes and Template should be reviewed by Optimizely. 
+  //"PackageUpdater": {
+  //  "PackageMapPath": "PackageMaps"
+  //},
+
+  //"TemplateInserter": {
+  //  "TemplateConfigFiles": [
+  //    "Templates\\EPiServerTemplates\\TemplateConfig.json"
+  //  ]
+  //},
+
+  "FindReplaceOptions": {
+    "Replacements": {
+      "[AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]": "[AcceptVerbs(new string[] {\"GET\",\"POST\" })]"
+    }
+  },
+
+  "ObsoleteOptions": {
+    "Usings": [
+      "Mediachase.BusinessFoundation"
+    ]
+  },
+
+
+  "SourceUpdater": {
+    "AdditionalAnalyzerTexts": [
+      "EpiTypeReplacements.typemap",
+      "EpiClassReplacements.classmap"
+    ]
+  },
+
+  "ConfigUpdater": {
+    "ConfigFilePaths": [
+      "app.config"
+    ]
+  },
+
+  "ExtensionServiceProviders": [
+    "Epi.Source.Updater.dll"
+  ]
+}
