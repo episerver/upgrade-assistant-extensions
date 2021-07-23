@@ -38,14 +38,9 @@
   
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.2" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.9.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.9.0" />
-
-    <!-- In a real (external) extension, Upgrade Assistant abstractions would be referenced as a NuGet package -->
-    <!-- To enable building and testing with the latest Upgrade Assistant chnges, samples in this repo use -->
-    <!-- a project reference instead. -->
-    <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Abstractions" Version="0.2.231403" />
-    <!--<ProjectReference Include="..\..\src\common\Microsoft.DotNet.UpgradeAssistant.Abstractions\Microsoft.DotNet.UpgradeAssistant.Abstractions.csproj" />-->
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.8.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.8.0" />
+    <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Abstractions" Version="0.2.236301" />
   </ItemGroup>
 
   <ItemGroup>
