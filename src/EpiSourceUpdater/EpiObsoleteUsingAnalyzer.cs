@@ -1,15 +1,13 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Diagnostics;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.Extensions.Options;
-using CS = Microsoft.CodeAnalysis.CSharp;
 using CSSyntax = Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Epi.Source.Updater
@@ -21,12 +19,7 @@ namespace Epi.Source.Updater
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class EpiObsoleteUsingAnalyzer : DiagnosticAnalyzer
     {
-        private readonly ObsoletePropertyOptions? _options;
-
-        public EpiObsoleteUsingAnalyzer(IOptions<ObsoletePropertyOptions> obsoletePropertyOptions)
-        {
-            _options = obsoletePropertyOptions?.Value;
-        }
+        private readonly List<string> _usings = new List<string>() { "Mediachase.BusinessFoundation" };
 
         /// <summary>
         /// The diagnostic ID for diagnostics produced by this analyzer.
@@ -86,25 +79,20 @@ namespace Epi.Source.Updater
             string usingFullName;
             var type = usingDirective.Name.GetType();
 
-            if (type == typeof(Microsoft.CodeAnalysis.CSharp.Syntax.IdentifierNameSyntax))
+            if (type == typeof(CSSyntax.IdentifierNameSyntax))
             {
-                usingFullName = ((Microsoft.CodeAnalysis.CSharp.Syntax.IdentifierNameSyntax)usingDirective.Name).ToFullString();
+                usingFullName = usingDirective.Name.ToFullString();
             }
-            else if (type == typeof(Microsoft.CodeAnalysis.CSharp.Syntax.QualifiedNameSyntax))
+            else if (type == typeof(CSSyntax.QualifiedNameSyntax))
             {
-                usingFullName = ((Microsoft.CodeAnalysis.CSharp.Syntax.QualifiedNameSyntax)usingDirective.Name).ToFullString();
+                usingFullName = usingDirective.Name.ToFullString();
             }
             else
             {
                 return;
             }
 
-            if (_options is null || _options.Usings is null)
-            {
-                return;
-            }
-
-            if (_options.Usings.Where(u => u.Equals(usingFullName, StringComparison.OrdinalIgnoreCase)).Any())
+            if (_usings.Where(u => u.Equals(usingFullName, StringComparison.OrdinalIgnoreCase)).Any())
             {
                 var diagnosti = Diagnostic.Create(Rule, usingDirective.GetLocation(), usingFullName);
                 context.ReportDiagnostic(diagnosti);

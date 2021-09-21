@@ -1,17 +1,14 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CodeActions;
+using Microsoft.CodeAnalysis.CodeFixes;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.CodeFixes;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.CodeAnalysis.Editing;
-using Microsoft.CodeAnalysis.Formatting;
 
 namespace Epi.Source.Updater
 {
@@ -27,11 +24,9 @@ namespace Epi.Source.Updater
         // the analyzer's ID in the code fix provider's FixableDiagnosticIds array.
         public sealed override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(EpiAttributeRemoverAnalyzer.DiagnosticId);
 
-        public sealed override FixAllProvider GetFixAllProvider()
-        {
+        public sealed override FixAllProvider GetFixAllProvider() =>
             // See https://github.com/dotnet/roslyn/blob/master/docs/analyzers/FixAllProvider.md for more information on Fix All Providers
-            return WellKnownFixAllProviders.BatchFixer;
-        }
+            WellKnownFixAllProviders.BatchFixer;
 
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
@@ -45,40 +40,34 @@ namespace Epi.Source.Updater
             var diagnostic = context.Diagnostics.First();
             var diagnosticSpan = diagnostic.Location.SourceSpan;
 
-            var declaration = root.FindToken(diagnosticSpan.Start).Parent?.AncestorsAndSelf().OfType<ClassDeclarationSyntax>().First();
+            var declaration = root.FindNode(diagnosticSpan);
 
             if (declaration is null)
             {
                 return;
             }
 
+
             // Register a code action that will invoke the fix.
             context.RegisterCodeFix(
             CodeAction.Create(
                 Resources.EpiAttributeRemoverTitle,
-                c => ReplaceClassesAsync(context.Document, declaration, c),
+                c => RemoveDefaultPropertyAsync(context.Document, (AttributeSyntax)declaration, new CancellationToken()),
                 nameof(Resources.EpiAttributeRemoverTitle)),
             diagnostic);
         }
 
-        private static async Task<Document> ReplaceClassesAsync(Document document, ClassDeclarationSyntax localDeclaration, CancellationToken cancellationToken)
+        private static async Task<Document> RemoveDefaultPropertyAsync(Document document, AttributeSyntax localDeclaration, CancellationToken cancellationToken)
         {
             // Remove the leading trivia from the local declaration.
             var oldRoot = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
             var newNode = localDeclaration;
 
-            foreach (var attrib in localDeclaration.AttributeLists)
+            foreach (var arg in localDeclaration.ArgumentList.Arguments)
             {
-                if (attrib.Attributes[0].Name.ToString() == "TemplateDescriptor")
+                if (arg.NameEquals.Name.Identifier.Text == "Default")
                 {
-                    foreach (var arg in attrib.Attributes[0].ArgumentList.Arguments)
-                    {
-                        if (arg.NameEquals.Name.Identifier.Text == "Default")
-                        {
-                            var removedArg = attrib.Attributes[0].ArgumentList.RemoveNode(arg, SyntaxRemoveOptions.AddElasticMarker);
-                            newNode = localDeclaration.RemoveNode(arg, SyntaxRemoveOptions.KeepNoTrivia);
-                        }
-                    }
+                    newNode = localDeclaration.RemoveNode(arg, SyntaxRemoveOptions.KeepNoTrivia);
                 }
             }
 

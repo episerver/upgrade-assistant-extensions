@@ -1,15 +1,15 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using Microsoft.DotNet.UpgradeAssistant;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.DotNet.UpgradeAssistant;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace Epi.Source.Updater
 {
@@ -71,13 +71,11 @@ namespace Epi.Source.Updater
         /// <param name="context">The upgrade context to evaluate for applicability.</param>
         /// <param name="token">A cancellation token.</param>
         /// <returns>True if the upgrade step should be displayed to the user; false otherwise.</returns>
-        protected override Task<bool> IsApplicableImplAsync(IUpgradeContext context, CancellationToken token)
-        {
+        protected override Task<bool> IsApplicableImplAsync(IUpgradeContext context, CancellationToken token) =>
             // Because this upgrade step works at the project level, it is only applicable if there is a current project available.
             // If, for example, the user hasn't selected which project to upgrade yet, then this step will not apply.
             // Also, the upgrade step only applies if string replacements have been supplied.
-            return Task.FromResult(context?.CurrentProject is not null && StringsToReplace.Any());
-        }
+            Task.FromResult(context?.CurrentProject is not null && StringsToReplace.Any());
 
         /// <summary>
         /// This method runs when the Upgrade Assistant is considering this upgrade step to run next. The method needs to

@@ -2,70 +2,44 @@
 // as a starting point for DI registration and HTTP request processing pipeline configuration.
 // This file will need updated according to the specific scenario of the application being migrated.
 // For more information on ASP.NET Core startup files, see https://docs.microsoft.com/aspnet/core/fundamentals/startup
-
+using EPiServer.Cms.UI.AspNetIdentity;
+using EPiServer.Data;
+using EPiServer.Web.Routing;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using EPiServer.ServiceLocation;
-using EPiServer.Data;
-using EPiServer.DependencyInjection;
-using System.IO;
-using EPiServer.Cms.UI.AspNetIdentity;
-using EPiServer.Web.Routing;
-using EPiServer.Framework.Web.Resources;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 namespace WebApplication1
 {
     public class Startup
     {
-        private readonly IWebHostEnvironment _webHostingEnvironment;
         private readonly IConfiguration _configuration;
 
-        public Startup(IWebHostEnvironment webHostingEnvironment, IConfiguration configuration)
+        public Startup(IConfiguration configuration)
         {
-            _webHostingEnvironment = webHostingEnvironment;
             _configuration = configuration;
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // dbPath and connectionstring will need updated to match this app's database dependencies
-            var dbPath = Path.Combine(_webHostingEnvironment.ContentRootPath, "App_Data\\Alloy.mdf");
-            var connectionstring = _configuration.GetConnectionString("EPiServerDB") ?? $"Data Source=(LocalDb)\\MSSQLLocalDB;AttachDbFilename={dbPath};Initial Catalog=alloy_mvc_netcore;Integrated Security=True;Connect Timeout=30;MultipleActiveResultSets=True";
-
-            services.Configure<DataAccessOptions>(o =>
-            {
-                o.SetConnectionString(connectionstring);
-            });
-
-            services.Configure<IISServerOptions>(options => options.AllowSynchronousIO = true);
-            services.Configure<KestrelServerOptions>(options => options.AllowSynchronousIO = true);
-            services.Configure<ClientResourceOptions>(o => o.Debug = true);
             services.AddCmsAspNetIdentity<ApplicationUser>(o =>
             {
                 if (string.IsNullOrEmpty(o.ConnectionStringOptions?.ConnectionString))
                 {
                     o.ConnectionStringOptions = new ConnectionStringOptions()
                     {
-                        ConnectionString = connectionstring
+                        ConnectionString = _configuration.GetConnectionString("EPiServerDB")
                     };
                 }
             });
 
-            if (_webHostingEnvironment.IsDevelopment())
-            {
-
-            }
-
-            services.AddMvc().AddRazorRuntimeCompilation();
+            services.AddMvc();
             services.AddCms();
-
             services.ConfigureApplicationCookie(options =>
             {
-                options.LoginPath = "/Login";
+                options.LoginPath = "/util/Login";
             });
         }
 
@@ -86,7 +60,7 @@ namespace WebApplication1
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapContent();
-                endpoints.MapControllerRoute("Register", "/Register", new { controller = "Register", action = "Index" });
+                endpoints.MapControllers();
                 endpoints.MapRazorPages();
             });
         }
