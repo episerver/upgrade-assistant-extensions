@@ -45,6 +45,10 @@
       {
         "Name": "EPiServer.ServiceLocation.StructureMap",
         "Version": "*"
+      },
+      {
+        "Name": "EPiServer.CMS",
+        "Version": "*"
       }
     ],
     "NetCorePackages": [
