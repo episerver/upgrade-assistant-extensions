@@ -1,33 +1,9 @@
 ﻿[
   {
-    "PackageSetName": "EPiServer",
+    "PackageSetName": "Remove old packages",
     "NetFrameworkPackages": [
       {
         "Name": "EPiServer.CMS.AspNet",
-        "Version": "*"
-      },
-      {
-        "Name": "EPiServer.CMS.Core",
-        "Version": "*"
-      },
-      {
-        "Name": "EPiServer.CMS.TinyMce",
-        "Version": "*"
-      },
-      {
-        "Name": "EPiServer.CMS.UI",
-        "Version": "*"
-      },
-      {
-        "Name": "EPiServer.CMS.UI.AspNetIdentity",
-        "Version": "*"
-      },
-      {
-        "Name": "EPiServer.CMS.UI.Core",
-        "Version": "*"
-      },
-      {
-        "Name": "EPiServer.Framework",
         "Version": "*"
       },
       {
@@ -45,16 +21,22 @@
       {
         "Name": "EPiServer.ServiceLocation.StructureMap",
         "Version": "*"
-      },
+      }
+    ],
+    "NetCorePackages": []
+  },
+  {
+    "PackageSetName": "EPiServer",
+    "NetFrameworkPackages": [
       {
         "Name": "EPiServer.CMS",
-        "Version": "*"
+        "Version": "11.99.99"
       }
     ],
     "NetCorePackages": [
       {
-        "Name": "Episerver.CMS",
-        "Version": "*"
+        "Name": "EPiServer.CMS",
+        "Version": "12.0.3"
       }
     ]
   }
