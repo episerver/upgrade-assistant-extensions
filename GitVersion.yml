@@ -1,5 +1,4 @@
 mode: Mainline
-next-version: 1.0.4
 branches:
   main:
     tag: ''

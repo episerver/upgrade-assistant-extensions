@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - 'main'
-      - 'add-github-action'
   workflow_dispatch:
 jobs:
   build_test_pack:
