@@ -90,3 +90,5 @@ PublishScripts/
 !.vscode/launch.json
 !.vscode/extensions.json
 /src/AspNetMigrator.Console/Properties/launchSettings.json
+out/
+outpublish/
