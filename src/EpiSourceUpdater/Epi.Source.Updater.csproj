@@ -4,7 +4,6 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Epi.Source.Updater</AssemblyName>
     <LangVersion>latest</LangVersion>
-	<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <ItemGroup>
@@ -43,12 +42,9 @@
   
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.2" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.9.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.9.0" />
-    <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Abstractions" Version="0.3.256001">
-		<IncludeAssets>all</IncludeAssets>
-		<ExcludeAssets>build</ExcludeAssets>
-	</PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.8.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.8.0" />
+	<PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Abstractions" Version="*" />
   </ItemGroup>
 
   <ItemGroup>
