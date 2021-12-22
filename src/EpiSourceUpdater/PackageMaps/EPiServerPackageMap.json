@@ -21,6 +21,14 @@
       {
         "Name": "EPiServer.ServiceLocation.StructureMap",
         "Version": "*"
+      },
+      {
+        "Name": "Newtonsoft.Json",
+        "Version": "*"
+      },
+      {
+        "Name": "EPiServer.Logging.Log4Net",
+        "Version": "*"
       }
     ],
     "NetCorePackages": []
@@ -41,10 +49,10 @@
     ]
   },
   {
-    "PackageSetName": "EPiServer.UI",
+    "PackageSetName": "EPiServer.CMS.UI",
     "NetFrameworkPackages": [
       {
-        "Name": "EPiServer.UI",
+        "Name": "EPiServer.CMS.UI",
         "Version": "11.99.99"
       }
     ],
@@ -52,6 +60,36 @@
       {
         "Name": "EPiServer.UI",
         "Version": "12.0.3"
+      }
+    ]
+  },
+  {
+    "PackageSetName": "EPiServer.CMS.UI.AspNetIdentity",
+    "NetFrameworkPackages": [
+      {
+        "Name": "EPiServer.CMS.UI.AspNetIdentity",
+        "Version": "11.99.99"
+      }
+    ],
+    "NetCorePackages": [
+      {
+        "Name": "EPiServer.CMS.UI.AspNetIdentity",
+        "Version": "12.0.3"
+      }
+    ]
+  },
+   {
+    "PackageSetName": "EPiServer.CMS.TinyMce",
+    "NetFrameworkPackages": [
+      {
+        "Name": "EPiServer.CMS.TinyMce",
+        "Version": "2.99.99"
+      }
+    ],
+    "NetCorePackages": [
+      {
+        "Name": "EPiServer.CMS.TinyMce",
+        "Version": "3.0.1"
       }
     ]
   }
