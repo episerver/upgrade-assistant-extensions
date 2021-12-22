@@ -1,6 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using Epi.Source.Updater.Internal;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.DotNet.UpgradeAssistant;
@@ -57,6 +58,7 @@ namespace Epi.Source.Updater
 
             // Upgrade Step.
             services.Services.AddUpgradeStep<FindReplaceUpgradeStep>();
+            services.Services.AddUpgradeStep<EpiTemplateInserterStep>();
 
             // Code Fixers.
             services.Services.AddTransient<CodeFixProvider, EpiAttributeRemoverCodeFixProvider>();  // EP0001
