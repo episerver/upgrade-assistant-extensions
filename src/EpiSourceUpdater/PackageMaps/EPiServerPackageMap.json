@@ -78,7 +78,7 @@
       }
     ]
   },
-   {
+  {
     "PackageSetName": "EPiServer.CMS.TinyMce",
     "NetFrameworkPackages": [
       {
@@ -90,6 +90,21 @@
       {
         "Name": "EPiServer.CMS.TinyMce",
         "Version": "3.0.1"
+      }
+    ]
+  },
+  {
+    "PackageSetName": "EPiServer.Commerce.Core",
+    "NetFrameworkPackages": [
+      {
+        "Name": "EPiServer.Commerce.Core",
+        "Version": "13.99.99"
+      }
+    ],
+    "NetCorePackages": [
+      {
+        "Name": "EPiServer.Commerce.Core",
+        "Version": "14.1.1"
       }
     ]
   }

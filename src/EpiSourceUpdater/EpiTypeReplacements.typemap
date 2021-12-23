@@ -2,3 +2,4 @@
 
 EPiServer.Web.Routing	EPiServer.Core.Routing
 Foundation.Commerce.Markets   Foundation.Infrastructure.Commerce.Markets
+VirtualPathUtility		EPiServer.Web.VirtualPathUtilityEx			
