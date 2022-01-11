@@ -162,6 +162,15 @@
   <data name="EpiObsoleteUsingTitle" xml:space="preserve">
     <value>EPI Server Remove obsolete usings like Mediachase.BusinessFoundation</value>
   </data>
+  <data name="EpiPartialControllerDescription" xml:space="preserve">
+    <value>EPI Server Classes like  PartialContentController or BlockController will be replaced.</value>
+  </data>
+  <data name="EpiPartialControllerFormat" xml:space="preserve">
+    <value>Method 'Index' will be replaced with 'InvokeComponent'</value>
+  </data>
+  <data name="EpiPartialControllerTitle" xml:space="preserve">
+    <value>EPiServer partial controllers will be updated</value>
+  </data>
   <data name="MakeConstDescription" xml:space="preserve">
     <value>Variables that are not set after they are created should be marked as constant</value>
   </data>

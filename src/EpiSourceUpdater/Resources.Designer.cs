@@ -19,7 +19,7 @@ namespace Epi.Source.Updater {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -192,6 +192,33 @@ namespace Epi.Source.Updater {
         internal static string EpiObsoleteUsingTitle {
             get {
                 return ResourceManager.GetString("EpiObsoleteUsingTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EPI Server Classes like  PartialContentController or BlockController will be replaced..
+        /// </summary>
+        internal static string EpiPartialControllerDescription {
+            get {
+                return ResourceManager.GetString("EpiPartialControllerDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Method &apos;Index&apos; will be replaced with &apos;InvokeComponent&apos;.
+        /// </summary>
+        internal static string EpiPartialControllerFormat {
+            get {
+                return ResourceManager.GetString("EpiPartialControllerFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EPiServer partial controllers will be updated.
+        /// </summary>
+        internal static string EpiPartialControllerTitle {
+            get {
+                return ResourceManager.GetString("EpiPartialControllerTitle", resourceCulture);
             }
         }
         
