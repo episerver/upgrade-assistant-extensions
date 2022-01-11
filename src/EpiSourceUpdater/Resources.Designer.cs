@@ -79,7 +79,7 @@ namespace Epi.Source.Updater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to EPI Server Framework Attribute TemplateDescriptor will be updated.
+        ///   Looks up a localized string similar to CMS Attribute TemplateDescriptor will be updated.
         /// </summary>
         internal static string EpiAttributeRemoverTitle {
             get {
@@ -88,7 +88,7 @@ namespace Epi.Source.Updater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This class is no longer supported on EPI Server and will be replaced.
+        ///   Looks up a localized string similar to This class is no longer supported on CMS and will be replaced.
         /// </summary>
         internal static string EpiClassUpgradeDescription {
             get {
@@ -106,7 +106,7 @@ namespace Epi.Source.Updater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to EPI Server Classes like  PartialContentController or BlockController will be replaced.
+        ///   Looks up a localized string similar to CMS Classes like PartialContentController or BlockController will be replaced.
         /// </summary>
         internal static string EpiClassUpgradeTitle {
             get {
@@ -115,7 +115,7 @@ namespace Epi.Source.Updater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to EPI Server .NET 5.0 override PropertyData ParseToObject is no longer required. Functionality can be achieved by creating a new instance and calling the ParsToSelf method..
+        ///   Looks up a localized string similar to In CMS 12 override of PropertyData ParseToObject is no longer required. Functionality can be achieved by creating a new instance and calling the ParsToSelf method..
         /// </summary>
         internal static string EpiDisallowedTypesDescription {
             get {
@@ -133,7 +133,7 @@ namespace Epi.Source.Updater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to EPI Server .NET 5.0 projects should no longer use overrides for ParseToObject.
+        ///   Looks up a localized string similar to CMS 12 projects should no longer use overrides for ParseToObject.
         /// </summary>
         internal static string EpiDisallowedTypesTitle {
             get {
@@ -142,7 +142,7 @@ namespace Epi.Source.Updater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Interface IFindUIConfiguration is no longer supported on EPI Server and will be replaced.
+        ///   Looks up a localized string similar to The Interface IFindUIConfiguration is no longer supported and will be replaced.
         /// </summary>
         internal static string EpiMemberReplacementDescription {
             get {
@@ -160,7 +160,7 @@ namespace Epi.Source.Updater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to EPI Server Framework IFindUIConfiguration will be replaced with FindOptions.
+        ///   Looks up a localized string similar to IFindUIConfiguration will be replaced with FindOptions.
         /// </summary>
         internal static string EpiMemberReplacementTitle {
             get {
@@ -187,7 +187,7 @@ namespace Epi.Source.Updater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to EPI Server Remove obsolete usings like Mediachase.BusinessFoundation.
+        ///   Looks up a localized string similar to Commerce: Remove obsolete usings like Mediachase.BusinessFoundation.
         /// </summary>
         internal static string EpiObsoleteUsingTitle {
             get {
@@ -196,7 +196,7 @@ namespace Epi.Source.Updater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to EPI Server Classes like  PartialContentController or BlockController will be replaced..
+        ///   Looks up a localized string similar to CMS Classes like  PartialContentController or BlockController will be replaced..
         /// </summary>
         internal static string EpiPartialControllerDescription {
             get {
@@ -214,7 +214,7 @@ namespace Epi.Source.Updater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to EPiServer partial controllers will be updated.
+        ///   Looks up a localized string similar to CMS partial controllers will be updated.
         /// </summary>
         internal static string EpiPartialControllerTitle {
             get {
@@ -250,7 +250,7 @@ namespace Epi.Source.Updater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This type is no longer supported on EPI Server and should be replaced..
+        ///   Looks up a localized string similar to This type is no longer supported on CMS and should be replaced..
         /// </summary>
         internal static string TypeUpgradeDescription {
             get {
@@ -268,7 +268,7 @@ namespace Epi.Source.Updater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to EPI Server Types and Namespaces should be upgraded.
+        ///   Looks up a localized string similar to CMS Types and Namespaces should be upgraded.
         /// </summary>
         internal static string TypeUpgradeTitle {
             get {
