@@ -144,6 +144,15 @@
   <data name="EpiDisallowedTypesTitle" xml:space="preserve">
     <value>CMS 12 projects should no longer use overrides for ParseToObject</value>
   </data>
+  <data name="EpiDisplayChannelDescription" xml:space="preserve">
+    <value>CMS Display Channels will be updated.</value>
+  </data>
+  <data name="EpiDisplayChannelFormat" xml:space="preserve">
+    <value>Argument 'HttpContextBase' will be replaced with 'HttpContext'</value>
+  </data>
+  <data name="EpiDisplayChannelTitle" xml:space="preserve">
+    <value>CMS display channels will be updated</value>
+  </data>
   <data name="EpiMemberReplacementDescription" xml:space="preserve">
     <value>The Interface IFindUIConfiguration is no longer supported and will be replaced</value>
   </data>
@@ -163,7 +172,7 @@
     <value>Commerce: Remove obsolete usings like Mediachase.BusinessFoundation</value>
   </data>
   <data name="EpiPartialControllerDescription" xml:space="preserve">
-    <value>CMS Classes like  PartialContentController or BlockController will be replaced.</value>
+    <value>CMS partial controllers will be updated.</value>
   </data>
   <data name="EpiPartialControllerFormat" xml:space="preserve">
     <value>Method 'Index' will be replaced with 'InvokeComponent'</value>

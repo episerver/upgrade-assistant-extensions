@@ -21,13 +21,13 @@ namespace Epi.Source.Updater
     /// dependency injection container (by IExtensionServiceProvider) will be used during
     /// the source update step.
     /// </summary>
-    [ExportCodeFixProvider(LanguageNames.CSharp, Name = "EP0006 CodeFix Provider")]
-    public class EpiPartialControllerCodeFixProvider : CodeFixProvider
+    [ExportCodeFixProvider(LanguageNames.CSharp, Name = "EP0007 CodeFix Provider")]
+    public class EpiDisplayChannelCodeFixProvider : CodeFixProvider
     {
         // The Upgrade Assistant will only use analyzers that have an associated code fix provider registered including
         // the analyzer's ID in the code fix provider's FixableDiagnosticIds array.
-        public sealed override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(EpiPartialControllerAnalyzer.DiagnosticId);
-        private const string MvcNamespace = "Microsoft.AspNetCore.Mvc";
+        public sealed override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(EpiDisplayChannelAnalyzer.DiagnosticId);
+        private const string HttpNamespace = "Microsoft.AspNetCore.Http";
 
         public sealed override FixAllProvider GetFixAllProvider() =>
             // See https://github.com/dotnet/roslyn/blob/master/docs/analyzers/FixAllProvider.md for more information on Fix All Providers
@@ -44,51 +44,37 @@ namespace Epi.Source.Updater
 
             var diagnostic = context.Diagnostics.First();
             var diagnosticSpan = diagnostic.Location.SourceSpan;
-            var node = root.FindNode(diagnosticSpan);
-            if (node is null)
+            var methodDeclaration = root.FindNode(diagnosticSpan) as MethodDeclarationSyntax;
+            if (methodDeclaration is null)
             {
                 return;
             }
 
-            if (diagnostic.Properties.ContainsKey(EpiPartialControllerAnalyzer.PartialView) && node is IdentifierNameSyntax identifierNameSyntax)
-            {
-                context.RegisterCodeFix(
-                   CodeAction.Create(
-                       Resources.EpiPartialControllerTitle,
-                       c => ReplacePartialViewMethodAsync(context.Document, identifierNameSyntax, c),
-                       nameof(Resources.EpiPartialControllerTitle)),
-                   diagnostic);
-            }
-            else if (node is MethodDeclarationSyntax methodDeclaration)
-            {
-
-                context.RegisterCodeFix(
-                    CodeAction.Create(
-                        Resources.EpiPartialControllerTitle,
-                        c => ReplaceNameAndReturnParameterAsync(context.Document, methodDeclaration, c),
-                        nameof(Resources.EpiPartialControllerTitle)),
-                    diagnostic);
-            }
+            context.RegisterCodeFix(
+                     CodeAction.Create(
+                         Resources.EpiDisplayChannelTitle,
+                         c => ReplaceNameAndReturnParameterAsync(context.Document, methodDeclaration, c),
+                         nameof(Resources.EpiDisplayChannelTitle)),
+                     diagnostic);
         }
 
         private static async Task<Document> ReplaceNameAndReturnParameterAsync(Document document, MethodDeclarationSyntax localDeclaration, CancellationToken cancellationToken)
         {
             var root = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
 
-            var updatedName = localDeclaration.WithIdentifier(SyntaxFactory.Identifier("InvokeComponent"));
-            var updatedReturnType = updatedName.WithReturnType(SyntaxFactory.ParseTypeName("IViewComponentResult"));
-            var updatedAccessibility = updatedReturnType.WithModifiers(SyntaxFactory.TokenList(SyntaxFactory.Token(SyntaxKind.ProtectedKeyword), SyntaxFactory.Token(SyntaxKind.OverrideKeyword)));
-            var newRoot = root!.ReplaceNode(localDeclaration, updatedAccessibility);
+            var updatedParameter = localDeclaration.ParameterList.Parameters[0].WithType(SyntaxFactory.ParseTypeName("HttpContext")).WithTrailingTrivia();
+            var updatedParameterList = localDeclaration.WithParameterList(SyntaxFactory.ParameterList(SyntaxFactory.SingletonSeparatedList<ParameterSyntax>(updatedParameter)));
+            var newRoot = root!.ReplaceNode(localDeclaration, updatedParameterList);
 
             // Return document with transformed tree.
             var updatedDocument = document.WithSyntaxRoot(newRoot);
 
             var compilationRoot = (await updatedDocument.GetSyntaxTreeAsync()).GetCompilationUnitRoot();
-            if (!compilationRoot.Usings.Any(u => u.Name.ToString() == MvcNamespace))
-{
+            if (!compilationRoot.Usings.Any(u => u.Name.ToString() == HttpNamespace))
+            {
                 var editor = await DocumentEditor.CreateAsync(updatedDocument, cancellationToken).ConfigureAwait(false);
                 var documentRoot = (CompilationUnitSyntax)editor.OriginalRoot;
-                var usingDirective = SyntaxFactory.UsingDirective(SyntaxFactory.ParseName(MvcNamespace).WithLeadingTrivia(SyntaxFactory.Whitespace(" ")))
+                var usingDirective = SyntaxFactory.UsingDirective(SyntaxFactory.ParseName(HttpNamespace).WithLeadingTrivia(SyntaxFactory.Whitespace(" ")))
                     .WithTrailingTrivia(SyntaxFactory.CarriageReturnLineFeed);
                 documentRoot = compilationRoot.AddUsings(usingDirective);
                 editor.ReplaceNode(editor.OriginalRoot, documentRoot);
@@ -96,17 +82,6 @@ namespace Epi.Source.Updater
             }
 
             return updatedDocument;
-        }
-
-        private static async Task<Document> ReplacePartialViewMethodAsync(Document document, IdentifierNameSyntax identifierNameSyntax, CancellationToken cancellationToken)
-        {
-            var root = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
-
-            var updatedName = identifierNameSyntax.WithIdentifier(SyntaxFactory.Identifier("View"));
-            var newRoot = root!.ReplaceNode(identifierNameSyntax, updatedName);
-
-            // Return document with transformed tree.
-            return document.WithSyntaxRoot(newRoot);
         }
     }
 }

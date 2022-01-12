@@ -142,6 +142,33 @@ namespace Epi.Source.Updater {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CMS Display Channels will be updated..
+        /// </summary>
+        internal static string EpiDisplayChannelDescription {
+            get {
+                return ResourceManager.GetString("EpiDisplayChannelDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument &apos;HttpContextBase&apos; will be replaced with &apos;HttpContext&apos;.
+        /// </summary>
+        internal static string EpiDisplayChannelFormat {
+            get {
+                return ResourceManager.GetString("EpiDisplayChannelFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CMS display channels will be updated.
+        /// </summary>
+        internal static string EpiDisplayChannelTitle {
+            get {
+                return ResourceManager.GetString("EpiDisplayChannelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The Interface IFindUIConfiguration is no longer supported and will be replaced.
         /// </summary>
         internal static string EpiMemberReplacementDescription {
@@ -196,7 +223,7 @@ namespace Epi.Source.Updater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CMS Classes like  PartialContentController or BlockController will be replaced..
+        ///   Looks up a localized string similar to CMS partial controllers will be updated..
         /// </summary>
         internal static string EpiPartialControllerDescription {
             get {
