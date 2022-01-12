@@ -29,6 +29,10 @@
       {
         "Name": "EPiServer.Logging.Log4Net",
         "Version": "*"
+      },
+      {
+        "Name": "EPiServer.Commerce.UI.ManagerIntegration",
+        "Version": "*"
       }
     ],
     "NetCorePackages": []
@@ -78,7 +82,7 @@
       }
     ]
   },
-   {
+  {
     "PackageSetName": "EPiServer.CMS.TinyMce",
     "NetFrameworkPackages": [
       {
@@ -90,6 +94,96 @@
       {
         "Name": "EPiServer.CMS.TinyMce",
         "Version": "3.0.1"
+      }
+    ]
+  },
+  {
+    "PackageSetName": "EPiServer.Commerce.Core",
+    "NetFrameworkPackages": [
+      {
+        "Name": "EPiServer.Commerce.Core",
+        "Version": "13.99.99"
+      }
+    ],
+    "NetCorePackages": [
+      {
+        "Name": "EPiServer.Commerce.Core",
+        "Version": "14.1.2"
+      }
+    ]
+  },
+  {
+    "PackageSetName": "EPiServer.Commerce",
+    "NetFrameworkPackages": [
+      {
+        "Name": "EPiServer.Commerce",
+        "Version": "13.99.99"
+      }
+    ],
+    "NetCorePackages": [
+      {
+        "Name": "EPiServer.Commerce",
+        "Version": "14.1.2"
+      }
+    ]
+  },
+  {
+    "PackageSetName": "EPiServer.Commerce.UI",
+    "NetFrameworkPackages": [
+      {
+        "Name": "EPiServer.Commerce.UI",
+        "Version": "13.99.99"
+      }
+    ],
+    "NetCorePackages": [
+      {
+        "Name": "EPiServer.Commerce.UI",
+        "Version": "14.1.2"
+      }
+    ]
+  },
+  {
+    "PackageSetName": "EPiServer.Commerce.UI.CustomerService",
+    "NetFrameworkPackages": [
+      {
+        "Name": "EPiServer.Commerce.UI.CustomerService",
+        "Version": "13.99.99"
+      }
+    ],
+    "NetCorePackages": [
+      {
+        "Name": "EPiServer.Commerce.UI.CustomerService",
+        "Version": "14.1.2"
+      }
+    ]
+  },
+  {
+    "PackageSetName": "EPiServer.Personalization.Commerce",
+    "NetFrameworkPackages": [
+      {
+        "Name": "EPiServer.Personalization.Commerce",
+        "Version": "3.99.99"
+      }
+    ],
+    "NetCorePackages": [
+      {
+        "Name": "EPiServer.Personalization.Commerce",
+        "Version": "4.0.6"
+      }
+    ]
+  },
+  {
+    "PackageSetName": "EPiServer.Tracking.Commerce",
+    "NetFrameworkPackages": [
+      {
+        "Name": "EPiServer.Tracking.Commerce",
+        "Version": "3.99.99"
+      }
+    ],
+    "NetCorePackages": [
+      {
+        "Name": "EPiServer.Tracking.Commerce",
+        "Version": "4.0.6"
       }
     ]
   }
