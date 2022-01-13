@@ -27,7 +27,8 @@ namespace Epi.Source.Updater
         // The Upgrade Assistant will only use analyzers that have an associated code fix provider registered including
         // the analyzer's ID in the code fix provider's FixableDiagnosticIds array.
         public sealed override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(EpiPartialControllerAnalyzer.DiagnosticId);
-        private const string MvcNamespace = "Microsoft.AspNetCore.Mvc";
+        private const string MicrosoftMvcNamespace = "Microsoft.AspNetCore.Mvc";
+        private const string EPiServerMvcNamespace = "EPiServer.Web.Mvc";
 
         public sealed override FixAllProvider GetFixAllProvider() =>
             // See https://github.com/dotnet/roslyn/blob/master/docs/analyzers/FixAllProvider.md for more information on Fix All Providers
@@ -84,18 +85,33 @@ namespace Epi.Source.Updater
             var updatedDocument = document.WithSyntaxRoot(newRoot);
 
             var compilationRoot = (await updatedDocument.GetSyntaxTreeAsync()).GetCompilationUnitRoot();
-            if (!compilationRoot.Usings.Any(u => u.Name.ToString() == MvcNamespace))
+            var missingMicrosoftMvcNamespace = !compilationRoot.Usings.Any(u => u.Name.ToString() == MicrosoftMvcNamespace);
+            var missingEpiserverMvcNamespace = !compilationRoot.Usings.Any(u => u.Name.ToString() == EPiServerMvcNamespace);
+            if (missingMicrosoftMvcNamespace || missingEpiserverMvcNamespace)
 {
                 var editor = await DocumentEditor.CreateAsync(updatedDocument, cancellationToken).ConfigureAwait(false);
                 var documentRoot = (CompilationUnitSyntax)editor.OriginalRoot;
-                var usingDirective = SyntaxFactory.UsingDirective(SyntaxFactory.ParseName(MvcNamespace).WithLeadingTrivia(SyntaxFactory.Whitespace(" ")))
-                    .WithTrailingTrivia(SyntaxFactory.CarriageReturnLineFeed);
-                documentRoot = compilationRoot.AddUsings(usingDirective);
+                if (missingMicrosoftMvcNamespace)
+                {
+                    documentRoot = AddUsing(compilationRoot, MicrosoftMvcNamespace);
+                }
+                if (missingEpiserverMvcNamespace)
+                {
+                    documentRoot = AddUsing(compilationRoot, EPiServerMvcNamespace);
+                }
+
                 editor.ReplaceNode(editor.OriginalRoot, documentRoot);
                 updatedDocument = editor.GetChangedDocument();
             }
 
             return updatedDocument;
+        }
+
+        private static CompilationUnitSyntax AddUsing(CompilationUnitSyntax compilationRoot, string namespaceToAdd)
+        {
+            var usingDirective = SyntaxFactory.UsingDirective(SyntaxFactory.ParseName(namespaceToAdd).WithLeadingTrivia(SyntaxFactory.Whitespace(" ")))
+                .WithTrailingTrivia(SyntaxFactory.CarriageReturnLineFeed);
+            return compilationRoot.AddUsings(usingDirective);
         }
 
         private static async Task<Document> ReplacePartialViewMethodAsync(Document document, IdentifierNameSyntax identifierNameSyntax, CancellationToken cancellationToken)
