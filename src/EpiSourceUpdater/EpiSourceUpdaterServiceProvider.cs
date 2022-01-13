@@ -57,6 +57,7 @@ namespace Epi.Source.Updater
             services.Services.AddTransient<DiagnosticAnalyzer, EpiObsoleteUsingAnalyzer>();         // EP0005
             services.Services.AddTransient<DiagnosticAnalyzer, EpiPartialControllerAnalyzer>();         // EP0006
             services.Services.AddTransient<DiagnosticAnalyzer, EpiDisplayChannelAnalyzer>();         // EP0007
+            services.Services.AddTransient<DiagnosticAnalyzer, EpiMetadataAwareAnalyzer>();         // EP0008
 
             // Upgrade Step.
             services.Services.AddUpgradeStep<FindReplaceUpgradeStep>();
@@ -70,6 +71,7 @@ namespace Epi.Source.Updater
             services.Services.AddTransient<CodeFixProvider, EpiObsoleteUsingCodeFixProvider>();     // EP0005
             services.Services.AddTransient<CodeFixProvider, EpiPartialControllerCodeFixProvider>();     // EP0006
             services.Services.AddTransient<CodeFixProvider, EpiDisplayChannelCodeFixProvider>();     // EP0007
+            services.Services.AddTransient<CodeFixProvider, EpiMetadataAwareCodeFixProvider>();     // EP0008
         }
     }
 }

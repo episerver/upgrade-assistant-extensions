@@ -15,7 +15,7 @@ namespace Epi.Source.Updater
     /// Analyzer for identifying and removing obsolet types or methods.
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public sealed class EpiPartialControllerAnalyzer : DiagnosticAnalyzer
+    public sealed class EpiPartialControllerAnalyzer : EpiSubTypeAnalyzer
     {
         /// <summary>
         /// The diagnostic ID for diagnostics produced by this analyzer.
@@ -37,6 +37,9 @@ namespace Epi.Source.Updater
         private static readonly LocalizableString Description = new LocalizableResourceString(nameof(Resources.EpiPartialControllerDescription), Resources.ResourceManager, typeof(Resources));
 
         private static readonly DiagnosticDescriptor Rule = new(DiagnosticId, Title, MessageFormat, Category, DiagnosticSeverity.Warning, isEnabledByDefault: true, description: Description);
+
+        public EpiPartialControllerAnalyzer() : base(BaseTypes)
+        { }
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
@@ -72,7 +75,7 @@ namespace Epi.Source.Updater
             }
             
             //Only change if inside a partial controller
-            if (!IsPartialController(FindClassDeclaration(context.Node)))
+            if (!IsSubType(FindClassDeclaration(context.Node)))
             {
                 return;
             }
@@ -94,7 +97,7 @@ namespace Epi.Source.Updater
 
             if (namespaceName.Equals(MethodName, StringComparison.Ordinal))
             {
-                if (methodDirective.ReturnType.ToString().ToUpperInvariant() == "ACTIONRESULT" && IsPartialController(methodDirective.Parent as ClassDeclarationSyntax))
+                if (methodDirective.ReturnType.ToString().ToUpperInvariant() == "ACTIONRESULT" && IsSubType(methodDirective.Parent as ClassDeclarationSyntax))
                 {
                     var diagnostic = Diagnostic.Create(Rule, methodDirective.GetLocation(), methodDirective.ToFullString());
                     context.ReportDiagnostic(diagnostic);
@@ -102,40 +105,6 @@ namespace Epi.Source.Updater
             }
         }
 
-        private static bool IsPartialController(ClassDeclarationSyntax classDirective)
-        {
-            if (classDirective is null || classDirective.BaseList is null)
-            {
-                return false;
-            }
-
-            foreach (var baseType in classDirective.BaseList.Types)
-            {
-                if (baseType.Type is GenericNameSyntax genericNameSyntax)
-                {
-                    if (BaseTypes.Contains(genericNameSyntax.Identifier.Text, StringComparer.OrdinalIgnoreCase))
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        private static ClassDeclarationSyntax FindClassDeclaration(SyntaxNode syntaxNode)
-        {
-            var currentNode = syntaxNode;
-            while (currentNode != null)
-            {
-                if (currentNode is ClassDeclarationSyntax)
-                {
-                    break;
-                }
-                currentNode = currentNode.Parent;
-            }
-
-            return currentNode as ClassDeclarationSyntax;
-        }
+       
     }
 }
