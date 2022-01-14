@@ -250,6 +250,33 @@ namespace Epi.Source.Updater {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CMS partial routers will be updated..
+        /// </summary>
+        internal static string EpiPartialRouterDescription {
+            get {
+                return ResourceManager.GetString("EpiPartialRouterDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Method signatures will be updated.
+        /// </summary>
+        internal static string EpiPartialRouterMessageFormat {
+            get {
+                return ResourceManager.GetString("EpiPartialRouterMessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CMS partial routers will be updated.
+        /// </summary>
+        internal static string EpiPartialRouterTitle {
+            get {
+                return ResourceManager.GetString("EpiPartialRouterTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Variables that are not set after they are created should be marked as constant.
         /// </summary>
         internal static string MakeConstDescription {

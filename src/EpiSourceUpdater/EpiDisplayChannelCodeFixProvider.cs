@@ -68,20 +68,7 @@ namespace Epi.Source.Updater
 
             // Return document with transformed tree.
             var updatedDocument = document.WithSyntaxRoot(newRoot);
-
-            var compilationRoot = (await updatedDocument.GetSyntaxTreeAsync()).GetCompilationUnitRoot();
-            if (!compilationRoot.Usings.Any(u => u.Name.ToString() == HttpNamespace))
-            {
-                var editor = await DocumentEditor.CreateAsync(updatedDocument, cancellationToken).ConfigureAwait(false);
-                var documentRoot = (CompilationUnitSyntax)editor.OriginalRoot;
-                var usingDirective = SyntaxFactory.UsingDirective(SyntaxFactory.ParseName(HttpNamespace).WithLeadingTrivia(SyntaxFactory.Whitespace(" ")))
-                    .WithTrailingTrivia(SyntaxFactory.CarriageReturnLineFeed);
-                documentRoot = compilationRoot.AddUsings(usingDirective);
-                editor.ReplaceNode(editor.OriginalRoot, documentRoot);
-                updatedDocument = editor.GetChangedDocument();
-            }
-
-            return updatedDocument;
+            return await updatedDocument.AddUsingIfMissingAsync(cancellationToken, HttpNamespace);
         }
     }
 }

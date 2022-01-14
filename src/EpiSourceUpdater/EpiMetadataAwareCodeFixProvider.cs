@@ -72,19 +72,7 @@ namespace Epi.Source.Updater
 
             // Return document with transformed tree.
             var updatedDocument = document.WithSyntaxRoot(newRoot);
-
-            var compilationRoot = (await updatedDocument.GetSyntaxTreeAsync()).GetCompilationUnitRoot();
-            if (!compilationRoot.Usings.Any(u => u.Name.ToString() == MicrosoftMetadataNamespace))
-            {
-                var editor = await DocumentEditor.CreateAsync(updatedDocument, cancellationToken).ConfigureAwait(false);
-                var documentRoot = (CompilationUnitSyntax)editor.OriginalRoot;
-                documentRoot = AddUsing(compilationRoot, MicrosoftMetadataNamespace);
-
-                editor.ReplaceNode(editor.OriginalRoot, documentRoot);
-                updatedDocument = editor.GetChangedDocument();
-            }
-
-            return updatedDocument;
+            return await updatedDocument.AddUsingIfMissingAsync(cancellationToken, MicrosoftMetadataNamespace);
         }
 
         private ClassDeclarationSyntax RefactorMethod(ClassDeclarationSyntax classDeclaration)
@@ -130,13 +118,6 @@ namespace Epi.Source.Updater
             }
 
             return classDeclaration;
-        }
-
-        private static CompilationUnitSyntax AddUsing(CompilationUnitSyntax compilationRoot, string namespaceToAdd)
-        {
-            var usingDirective = SyntaxFactory.UsingDirective(SyntaxFactory.ParseName(namespaceToAdd).WithLeadingTrivia(SyntaxFactory.Whitespace(" ")))
-                .WithTrailingTrivia(SyntaxFactory.CarriageReturnLineFeed);
-            return compilationRoot.AddUsings(usingDirective);
         }
     }
 }
