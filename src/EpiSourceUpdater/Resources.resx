@@ -189,6 +189,15 @@
   <data name="MakeConstTitle" xml:space="preserve">
     <value>Replace obsolete Types and Attributes eg. TemplateDescriptor(Default)</value>
   </data>
+  <data name="MetadataAwareDescription" xml:space="preserve">
+    <value>Convert IMetadataAware to IDisplayMetadataProvider.</value>
+  </data>
+  <data name="MetadataAwareMessageFormat" xml:space="preserve">
+    <value>Implementation of IMetadataAware will be replaced with IDisplayMetadataProvider</value>
+  </data>
+  <data name="MetadataAwareTitle" xml:space="preserve">
+    <value>Convert IMetadataAware to IDisplayMetadataProvider</value>
+  </data>
   <data name="TypeUpgradeDescription" xml:space="preserve">
     <value>This type is no longer supported on CMS and should be replaced.</value>
   </data>

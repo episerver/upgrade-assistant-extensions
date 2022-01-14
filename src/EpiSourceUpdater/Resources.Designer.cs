@@ -277,6 +277,33 @@ namespace Epi.Source.Updater {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Convert IMetadataAware to IDisplayMetadataProvider..
+        /// </summary>
+        internal static string MetadataAwareDescription {
+            get {
+                return ResourceManager.GetString("MetadataAwareDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Implementation of IMetadataAware will be replaced with IDisplayMetadataProvider.
+        /// </summary>
+        internal static string MetadataAwareMessageFormat {
+            get {
+                return ResourceManager.GetString("MetadataAwareMessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Convert IMetadataAware to IDisplayMetadataProvider.
+        /// </summary>
+        internal static string MetadataAwareTitle {
+            get {
+                return ResourceManager.GetString("MetadataAwareTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This type is no longer supported on CMS and should be replaced..
         /// </summary>
         internal static string TypeUpgradeDescription {

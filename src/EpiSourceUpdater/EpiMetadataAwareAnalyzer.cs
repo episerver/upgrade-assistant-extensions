@@ -15,12 +15,12 @@ namespace Epi.Source.Updater
     /// Analyzer for identifying and removing obsolet types or methods.
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public sealed class EpiDisplayChannelAnalyzer : EpiSubTypeAnalyzer
+    public sealed class EpiMetadataAwareAnalyzer : EpiSubTypeAnalyzer
     {
         /// <summary>
         /// The diagnostic ID for diagnostics produced by this analyzer.
         /// </summary>
-        public const string DiagnosticId = "EP0007";
+        public const string DiagnosticId = "EP0008";
 
         /// <summary>
         /// The diagnsotic category for diagnostics produced by this analyzer.
@@ -28,17 +28,16 @@ namespace Epi.Source.Updater
         private const string Category = "Upgrade";
 
 
-        private static readonly string MethodName = "IsActive";
-        private static readonly string HttpContextBase = "HttpContextBase";
-        private static readonly string[] BaseTypes = new[] { "DisplayChannel" };
+        private static readonly string MethodName = "OnMetadataCreated";
+        private static readonly string[] BaseTypes = new[] { "IMetadataAware" };
 
-        private static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.EpiDisplayChannelTitle), Resources.ResourceManager, typeof(Resources));
-        private static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.EpiDisplayChannelFormat), Resources.ResourceManager, typeof(Resources));
-        private static readonly LocalizableString Description = new LocalizableResourceString(nameof(Resources.EpiDisplayChannelDescription), Resources.ResourceManager, typeof(Resources));
+        private static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.MetadataAwareTitle), Resources.ResourceManager, typeof(Resources));
+        private static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.MetadataAwareMessageFormat), Resources.ResourceManager, typeof(Resources));
+        private static readonly LocalizableString Description = new LocalizableResourceString(nameof(Resources.MetadataAwareDescription), Resources.ResourceManager, typeof(Resources));
 
         private static readonly DiagnosticDescriptor Rule = new(DiagnosticId, Title, MessageFormat, Category, DiagnosticSeverity.Warning, isEnabledByDefault: true, description: Description);
 
-        public EpiDisplayChannelAnalyzer() : base(BaseTypes)
+        public EpiMetadataAwareAnalyzer() : base(BaseTypes)
         {
         }
 
@@ -54,10 +53,10 @@ namespace Epi.Source.Updater
             context.EnableConcurrentExecution();
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.Analyze | GeneratedCodeAnalysisFlags.ReportDiagnostics);
 
-            context.RegisterSyntaxNodeAction(AnalyzeIsActiveMethod, SyntaxKind.MethodDeclaration);
+            context.RegisterSyntaxNodeAction(AnalyzeIfInterfaceMethod, SyntaxKind.MethodDeclaration);
         }
 
-        private void AnalyzeIsActiveMethod(SyntaxNodeAnalysisContext context)
+        private void AnalyzeIfInterfaceMethod(SyntaxNodeAnalysisContext context)
         {
             var methodDirective = (MethodDeclarationSyntax)context.Node;
 
@@ -71,9 +70,9 @@ namespace Epi.Source.Updater
             if (namespaceName.Equals(MethodName, StringComparison.Ordinal))
             {
                 var parameters = methodDirective.ParameterList.Parameters;
-                if (parameters.Count == 1 && HttpContextBase.Equals(parameters.Single().Type.ToString()) && IsSubType(methodDirective.Parent as ClassDeclarationSyntax))
+                if (IsSubType(methodDirective.Parent as ClassDeclarationSyntax))
                 {
-                    var diagnostic = Diagnostic.Create(Rule, methodDirective.GetLocation(), methodDirective.ToFullString());
+                    var diagnostic = Diagnostic.Create(Rule, methodDirective.Parent.GetLocation(), methodDirective.ToFullString());
                     context.ReportDiagnostic(diagnostic);
                 }
             }
