@@ -84,34 +84,7 @@ namespace Epi.Source.Updater
             // Return document with transformed tree.
             var updatedDocument = document.WithSyntaxRoot(newRoot);
 
-            var compilationRoot = (await updatedDocument.GetSyntaxTreeAsync()).GetCompilationUnitRoot();
-            var missingMicrosoftMvcNamespace = !compilationRoot.Usings.Any(u => u.Name.ToString() == MicrosoftMvcNamespace);
-            var missingEpiserverMvcNamespace = !compilationRoot.Usings.Any(u => u.Name.ToString() == EPiServerMvcNamespace);
-            if (missingMicrosoftMvcNamespace || missingEpiserverMvcNamespace)
-{
-                var editor = await DocumentEditor.CreateAsync(updatedDocument, cancellationToken).ConfigureAwait(false);
-                var documentRoot = (CompilationUnitSyntax)editor.OriginalRoot;
-                if (missingMicrosoftMvcNamespace)
-                {
-                    documentRoot = AddUsing(compilationRoot, MicrosoftMvcNamespace);
-                }
-                if (missingEpiserverMvcNamespace)
-                {
-                    documentRoot = AddUsing(compilationRoot, EPiServerMvcNamespace);
-                }
-
-                editor.ReplaceNode(editor.OriginalRoot, documentRoot);
-                updatedDocument = editor.GetChangedDocument();
-            }
-
-            return updatedDocument;
-        }
-
-        private static CompilationUnitSyntax AddUsing(CompilationUnitSyntax compilationRoot, string namespaceToAdd)
-        {
-            var usingDirective = SyntaxFactory.UsingDirective(SyntaxFactory.ParseName(namespaceToAdd).WithLeadingTrivia(SyntaxFactory.Whitespace(" ")))
-                .WithTrailingTrivia(SyntaxFactory.CarriageReturnLineFeed);
-            return compilationRoot.AddUsings(usingDirective);
+            return await updatedDocument.AddUsingIfMissingAsync(cancellationToken, MicrosoftMvcNamespace, EPiServerMvcNamespace);
         }
 
         private static async Task<Document> ReplacePartialViewMethodAsync(Document document, IdentifierNameSyntax identifierNameSyntax, CancellationToken cancellationToken)

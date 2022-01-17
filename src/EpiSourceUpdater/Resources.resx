@@ -180,6 +180,15 @@
   <data name="EpiPartialControllerTitle" xml:space="preserve">
     <value>CMS partial controllers will be updated</value>
   </data>
+  <data name="EpiPartialRouterDescription" xml:space="preserve">
+    <value>CMS partial routers will be updated.</value>
+  </data>
+  <data name="EpiPartialRouterMessageFormat" xml:space="preserve">
+    <value>Method signatures will be updated</value>
+  </data>
+  <data name="EpiPartialRouterTitle" xml:space="preserve">
+    <value>CMS partial routers will be updated</value>
+  </data>
   <data name="MakeConstDescription" xml:space="preserve">
     <value>Variables that are not set after they are created should be marked as constant</value>
   </data>
