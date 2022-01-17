@@ -29,6 +29,7 @@ namespace Epi.Source.Updater
 
 
         private static readonly string MethodName = "RoutePartial";
+        private static readonly string RegistrationMethod = "RegisterPartialRouter";
         private static readonly string[] BaseTypes = new[] { "IPartialRouter" };
 
         private static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.EpiPartialRouterTitle), Resources.ResourceManager, typeof(Resources));
@@ -54,6 +55,10 @@ namespace Epi.Source.Updater
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.Analyze | GeneratedCodeAnalysisFlags.ReportDiagnostics);
 
             context.RegisterSyntaxNodeAction(AnalyzeIfInterfaceMethod, SyntaxKind.MethodDeclaration);
+            context.RegisterCompilationStartAction(compilationContext =>
+            {
+                compilationContext.RegisterSyntaxNodeAction(AnalyzePartialRouteRegistration, SyntaxKind.InvocationExpression);
+            });
         }
 
         private void AnalyzeIfInterfaceMethod(SyntaxNodeAnalysisContext context)
@@ -75,6 +80,28 @@ namespace Epi.Source.Updater
                     var diagnostic = Diagnostic.Create(Rule, methodDirective.Parent.GetLocation(), methodDirective.ToFullString());
                     context.ReportDiagnostic(diagnostic);
                 }
+            }
+        }
+
+        private void AnalyzePartialRouteRegistration(SyntaxNodeAnalysisContext context)
+        {
+            var memberExpression = (context.Node as InvocationExpressionSyntax)?.Expression as MemberAccessExpressionSyntax;
+            if (memberExpression is null)
+            {
+                return;
+            }
+
+            // If the accessed member isn't named "RegisterPartialRouter" bail out
+            if (!RegistrationMethod.Equals(memberExpression.Name.Identifier.Text))
+            {
+                return;
+            }
+
+            //If we have already acted by adding a comment then we should not report
+            if (!memberExpression.GetLeadingTrivia().Any(t => t.Kind() == SyntaxKind.SingleLineCommentTrivia && t.ToString().StartsWith("//Partial router should be registered in ioc container")))
+            {
+                var diagnostic = Diagnostic.Create(Rule, context.Node.GetLocation());
+                context.ReportDiagnostic(diagnostic);
             }
         }
     }

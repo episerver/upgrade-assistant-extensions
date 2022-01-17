@@ -29,6 +29,7 @@ namespace Epi.Source.Updater
         public sealed override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(EpiPartialRouterAnalyzer.DiagnosticId);
         private const string RoutingNamespace = "EPiServer.Core.Routing";
         private const string RoutingPipelineNamespace = "EPiServer.Core.Routing.Pipeline";
+        private const string DependencyInjectionNamespace = "Microsoft.Extensions.DependencyInjection";
 
         public sealed override FixAllProvider GetFixAllProvider() =>
             // See https://github.com/dotnet/roslyn/blob/master/docs/analyzers/FixAllProvider.md for more information on Fix All Providers
@@ -45,18 +46,26 @@ namespace Epi.Source.Updater
 
             var diagnostic = context.Diagnostics.First();
             var diagnosticSpan = diagnostic.Location.SourceSpan;
-            var methodDeclaration = root.FindNode(diagnosticSpan) as ClassDeclarationSyntax;
-            if (methodDeclaration is null)
+            var declaration = root.FindNode(diagnosticSpan);
+            if (declaration is ClassDeclarationSyntax classDeclaration)
             {
-                return;
+                context.RegisterCodeFix(
+                    CodeAction.Create(
+                        Resources.EpiPartialRouterTitle,
+                        c => ReplaceParametersAsync(context.Document, classDeclaration, c),
+                        nameof(Resources.EpiPartialRouterTitle)),
+                    diagnostic);
             }
-
-            context.RegisterCodeFix(
-                     CodeAction.Create(
-                         Resources.EpiPartialRouterTitle,
-                         c => ReplaceParametersAsync(context.Document, methodDeclaration, c),
-                         nameof(Resources.EpiPartialRouterTitle)),
-                     diagnostic);
+            else if (declaration is InvocationExpressionSyntax invocationExpression)
+            {
+                context.RegisterCodeFix(
+                   CodeAction.Create(
+                       Resources.EpiPartialRouterTitle,
+                       c => HandlePartialRouteRegistration(context.Document, invocationExpression, c),
+                       nameof(Resources.EpiPartialRouterTitle)),
+                   diagnostic);
+            }
+           
         }
 
         private static async Task<Document> ReplaceParametersAsync(Document document, ClassDeclarationSyntax localDeclaration, CancellationToken cancellationToken)
@@ -91,6 +100,84 @@ namespace Epi.Source.Updater
         private static MethodDeclarationSyntax FindMethod(ClassDeclarationSyntax classDeclaration, string methodName)
         {
             return classDeclaration.Members.OfType<MethodDeclarationSyntax>().FirstOrDefault(m => m.Identifier.Text == methodName); 
+        }
+
+        private async Task<Document> HandlePartialRouteRegistration(Document document, InvocationExpressionSyntax invocationExpression, CancellationToken cancellationToken)
+        {
+            //find the registration statement
+            var currentCodeBlock = GetSurroundingBlock(invocationExpression);
+            var getPartialRouterArgument = invocationExpression.ArgumentList.Arguments[0].Expression;
+            
+            if (currentCodeBlock is not null)
+            {
+                var root = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
+                var index = -1;
+                var statements = currentCodeBlock.Statements;
+                //find where registration statement is
+                for (var i = 0; i < statements.Count; i++)
+                {
+                    var statement = statements[i];
+                    if (statement is ExpressionStatementSyntax expressionStatement && expressionStatement.Expression == invocationExpression)
+                    {
+                        index = i;
+                        break;
+                    }
+                }
+
+                if (index > -1)
+                {
+                    var statement = statements[index];
+                    statements = statements.RemoveAt(index);
+                    var methodDeclaration = GetSurroundingMethod(invocationExpression);
+                    if (methodDeclaration is not null && methodDeclaration.Identifier.Text == "ConfigureContainer")
+                    {
+                        var parameterName = methodDeclaration.ParameterList.Parameters[0].Identifier.Text;
+                        if (getPartialRouterArgument is ObjectCreationExpressionSyntax objectCreationExpression)
+                        {
+                            statements = statements.Insert(index, SyntaxFactory.ParseStatement($"{parameterName}.Services.AddSingleton<IPartialRouter, {objectCreationExpression.Type}>();")
+                                 .WithLeadingTrivia(statement.GetLeadingTrivia()).WithTrailingTrivia(SyntaxFactory.CarriageReturnLineFeed));
+                        }
+                        else
+                        {
+                            statements = statements.Insert(index, SyntaxFactory.ParseStatement($"{parameterName}.Services.AddSingleton<IPartialRouter>({getPartialRouterArgument.ToString()});")
+                                 .WithLeadingTrivia(statement.GetLeadingTrivia()).WithTrailingTrivia(SyntaxFactory.CarriageReturnLineFeed));
+                        }
+                    }
+                    else
+                    {
+                        //The registration is done somewhere where we do not have access to IServiceCollection, add a comment on how registration should be done       
+                        var parameterType = getPartialRouterArgument is ObjectCreationExpressionSyntax objectCreationExpression ? objectCreationExpression.Type.ToString() : "CustomPartialRouter";
+                        var comment = SyntaxFactory.Comment($"//Partial router should be registered in ioc container like 'services.AddSingleton<IPartialRouter, {parameterType}>()'");
+                        statements = statements.Insert(index, statement.WithLeadingTrivia(statement.GetLeadingTrivia().Add(comment).Add(SyntaxFactory.CarriageReturnLineFeed)));
+                    }
+
+                    var newCodeBlock = currentCodeBlock.WithStatements(statements);
+                    var newroot = root.ReplaceNode(currentCodeBlock, newCodeBlock);
+                    return await document.WithSyntaxRoot(newroot).AddUsingIfMissingAsync(cancellationToken, DependencyInjectionNamespace);
+                }
+            }
+
+            return document;
+        }
+
+        private BlockSyntax GetSurroundingBlock(InvocationExpressionSyntax invocationExpression)
+        {
+            var parent = invocationExpression.Parent;
+            while (parent is not null && parent is not BlockSyntax)
+            {
+                parent = parent.Parent; 
+            }
+            return parent as BlockSyntax;
+        }
+
+        private MethodDeclarationSyntax GetSurroundingMethod(InvocationExpressionSyntax invocationExpression)
+        {
+            var parent = invocationExpression.Parent;
+            while (parent is not null && parent is not MethodDeclarationSyntax)
+            {
+                parent = parent.Parent;
+            }
+            return parent as MethodDeclarationSyntax;
         }
     }
 }
