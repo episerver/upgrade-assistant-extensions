@@ -116,12 +116,5 @@ namespace Epi.Source.Updater
             }
             return updatedClassDeclaration;
         }
-
-        private static CompilationUnitSyntax AddUsing(CompilationUnitSyntax compilationRoot, string namespaceToAdd)
-        {
-            var usingDirective = SyntaxFactory.UsingDirective(SyntaxFactory.ParseName(namespaceToAdd).WithLeadingTrivia(SyntaxFactory.Whitespace(" ")))
-                .WithTrailingTrivia(SyntaxFactory.CarriageReturnLineFeed);
-            return compilationRoot.AddUsings(usingDirective);
-        }
     }
 }
