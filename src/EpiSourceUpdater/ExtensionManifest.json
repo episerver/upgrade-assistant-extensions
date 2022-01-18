@@ -13,7 +13,8 @@
   },
   "FindReplaceOptions": {
     "Replacements": {
-      "[AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]": "[AcceptVerbs(new string[] {\"GET\",\"POST\" })]"
+      "[AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]": "[AcceptVerbs(new string[] {\"GET\",\"POST\" })]",
+      "PrincipalInfo.Current.Principal": "PrincipalInfo.CurrentPrincipal"
     }
   },
   "ObsoleteOptions": {
