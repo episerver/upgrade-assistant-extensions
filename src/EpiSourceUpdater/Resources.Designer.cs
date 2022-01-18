@@ -169,6 +169,33 @@ namespace Epi.Source.Updater {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ServiceAccessor&lt;HttpContextBase&gt; in constructor will changed to HttpContextAccessor..
+        /// </summary>
+        internal static string EpiHttpContextBaseDescription {
+            get {
+                return ResourceManager.GetString("EpiHttpContextBaseDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ServiceAccessor&lt;HttpContextBase&gt; in constructor will changed to HttpContextAccessor.
+        /// </summary>
+        internal static string EpiHttpContextBaseFormat {
+            get {
+                return ResourceManager.GetString("EpiHttpContextBaseFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ServiceAccessor&lt;HttpContextBase&gt; in constructor will changed to HttpContextAccessor.
+        /// </summary>
+        internal static string EpiHttpContextBaseTitle {
+            get {
+                return ResourceManager.GetString("EpiHttpContextBaseTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The Interface IFindUIConfiguration is no longer supported and will be replaced.
         /// </summary>
         internal static string EpiMemberReplacementDescription {

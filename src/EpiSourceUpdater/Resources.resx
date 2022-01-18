@@ -153,6 +153,15 @@
   <data name="EpiDisplayChannelTitle" xml:space="preserve">
     <value>CMS display channels will be updated</value>
   </data>
+  <data name="EpiHttpContextBaseDescription" xml:space="preserve">
+    <value>ServiceAccessor&lt;HttpContextBase&gt; in constructor will changed to HttpContextAccessor.</value>
+  </data>
+  <data name="EpiHttpContextBaseFormat" xml:space="preserve">
+    <value>ServiceAccessor&lt;HttpContextBase&gt; in constructor will changed to HttpContextAccessor</value>
+  </data>
+  <data name="EpiHttpContextBaseTitle" xml:space="preserve">
+    <value>ServiceAccessor&lt;HttpContextBase&gt; in constructor will changed to HttpContextAccessor</value>
+  </data>
   <data name="EpiMemberReplacementDescription" xml:space="preserve">
     <value>The Interface IFindUIConfiguration is no longer supported and will be replaced</value>
   </data>
