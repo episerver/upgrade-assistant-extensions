@@ -148,7 +148,7 @@ namespace Epi.Source.Updater
                         //The registration is done somewhere where we do not have access to IServiceCollection, add a comment on how registration should be done       
                         var parameterType = getPartialRouterArgument is ObjectCreationExpressionSyntax objectCreationExpression ? objectCreationExpression.Type.ToString() : "CustomPartialRouter";
                         var comment = SyntaxFactory.Comment($"//Partial router should be registered in ioc container like 'services.AddSingleton<IPartialRouter, {parameterType}>()'");
-                        statements = statements.Insert(index, statement.WithLeadingTrivia(statement.GetLeadingTrivia().Add(comment).Add(SyntaxFactory.CarriageReturnLineFeed)));
+                        statements = statements.Insert(index, statement.WithLeadingTrivia(statement.GetLeadingTrivia().Add(comment).Add(SyntaxFactory.CarriageReturnLineFeed).AddRange(statement.GetLeadingTrivia())));
                     }
 
                     var newCodeBlock = currentCodeBlock.WithStatements(statements);
