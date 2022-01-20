@@ -90,12 +90,15 @@ namespace Epi.Source.Updater
         private static async Task<Document> ReplacePartialViewMethodAsync(Document document, IdentifierNameSyntax identifierNameSyntax, CancellationToken cancellationToken)
         {
             var root = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
-
-            var updatedName = identifierNameSyntax.WithIdentifier(SyntaxFactory.Identifier("View"));
+            var comment = SyntaxFactory.Comment($"//The default convention for views and viewcomponent is '/Views/Shared/Components/ComponentName/Default.cshtml'");
+            var leadingTrivia = GetAncestorsTrivia(identifierNameSyntax);
+            var updatedName = identifierNameSyntax.WithIdentifier(SyntaxFactory.Identifier(SyntaxTriviaList.Create(SyntaxFactory.CarriageReturnLineFeed).AddRange(leadingTrivia).Add(comment).Add(SyntaxFactory.CarriageReturnLineFeed).AddRange(leadingTrivia), "View", SyntaxTriviaList.Empty));
             var newRoot = root!.ReplaceNode(identifierNameSyntax, updatedName);
-
             // Return document with transformed tree.
             return document.WithSyntaxRoot(newRoot);
         }
+
+        private static SyntaxTriviaList GetAncestorsTrivia(IdentifierNameSyntax identifierNameSyntax) =>
+            identifierNameSyntax.Ancestors().Where(a => a.HasLeadingTrivia).FirstOrDefault()?.GetLeadingTrivia()?? SyntaxTriviaList.Empty;
     }
 }
