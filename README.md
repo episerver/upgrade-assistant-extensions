@@ -26,4 +26,10 @@ upgrade-assistant upgrade {projectName}.csproj --extension "{extensionPath}" --i
 
 ### Known Issues
 
-If packages.config file exists under projectpath\\module\\_protected\\ then you need to remove it before start upgrading.
+#### packages.config
+
+If there is a packages.config file under projectpath\\module\\_protected\\ then you need to remove it before start upgrading.
+
+#### Database
+
+If you have used ASPNET Identity and after migration you are not able to login or get exception like "SqlException: Invalid column name 'NormalizedUserName'.", 'ConcurrencyStamp', 'LockoutEnd', 'NormalizedEmail' or missing 'AspNetRoleClaims' table, the reason is the schema between ASPNET Identity versions has been changed and the resource doesn't exist in the db. Please run the migrate MigrateAspnetIdentity.sql script file under database folder. (OBS: we recommend to take a backup of database before perform the script).
