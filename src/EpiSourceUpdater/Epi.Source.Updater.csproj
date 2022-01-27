@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Database\MigrateAspnetIdentity.sql" />
     <None Remove="PackageMaps\EPiServerPackageMap.json" />
     <None Remove="PackageMaps\GetaPackageMap.json" />
     <None Remove="Templates\EPiServerTemplates\TemplateConfig.json" />
@@ -20,6 +21,9 @@
   <!-- Be sure the extension's manifest file is copied on build,
        so that it will be present in the extension's binary output. -->
   <ItemGroup>
+    <Content Include="Database\MigrateAspnetIdentity.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="ExtensionManifest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
