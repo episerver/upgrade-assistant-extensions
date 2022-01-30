@@ -1,5 +1,7 @@
 # Optimizely Upgrade Assistant Extensions
 
+[![Continuous integration](https://github.com/episerver/upgrade-assistant-extensions/actions/workflows/ci.yml/badge.svg)](https://github.com/episerver/upgrade-assistant-extensions/actions/workflows/ci.yml)
+
 This repository contains extensions to the Upgrade Assistant tool specific to Optimizely scenarios.
 
 These extensions expand the upgrade-assistant tools's functionality to make Optimizely-specific changes during upgrade.
