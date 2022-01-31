@@ -1,0 +1,21 @@
+﻿[
+  {
+    "PackageSetName": "404Handlder",
+    "NetFrameworkPackages": [
+      {
+        "Name": "BVN.404Handler",
+        "Version": "*"
+      },
+      {
+        "Name": "Geta.404Handler",
+        "Version": "*"
+      }
+    ],
+    "NetCorePackages": [
+      {
+        "Name": "Geta.NotFoundHandler.Optimizely",
+        "Version": "1.0.0"
+      }
+    ]
+  }
+]

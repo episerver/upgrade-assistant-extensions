@@ -24,17 +24,7 @@ namespace WebApplication1
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCmsAspNetIdentity<ApplicationUser>(o =>
-            {
-                if (string.IsNullOrEmpty(o.ConnectionStringOptions?.ConnectionString))
-                {
-                    o.ConnectionStringOptions = new ConnectionStringOptions()
-                    {
-                        ConnectionString = _configuration.GetConnectionString("EPiServerDB")
-                    };
-                }
-            });
-
+            services.AddCmsAspNetIdentity<ApplicationUser>();
             services.AddMvc();
             services.AddCms();
             services.ConfigureApplicationCookie(options =>
@@ -60,8 +50,6 @@ namespace WebApplication1
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapContent();
-                endpoints.MapControllers();
-                endpoints.MapRazorPages();
             });
         }
     }

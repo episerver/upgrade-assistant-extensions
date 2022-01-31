@@ -2,12 +2,16 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using Microsoft.DotNet.UpgradeAssistant;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 

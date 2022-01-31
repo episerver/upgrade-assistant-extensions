@@ -1,0 +1,60 @@
+name: Continuous integration
+
+on:
+  push:
+    branches:
+      - 'main'
+  workflow_dispatch:
+jobs:
+  build_test_pack:
+    name: Build, test & pack
+    runs-on: windows-latest
+    env:
+      buildConfiguration: release
+    outputs: # https://stackoverflow.com/questions/59175332/using-output-from-a-previous-job-in-a-new-one-in-a-github-action
+      Version: ${{ steps.gitversion.outputs.nuGetVersionV2 }} 
+      CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}   
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+         fetch-depth: 0 #fetch-depth is needed for GitVersion
+        
+      # install and calculate the new version with GitVersion  
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0.9.7
+        with:
+          versionSpec: '5.x'
+      - name: Determine Version
+        uses: gittools/actions/gitversion/execute@v0.9.7
+        id: gitversion # step id used as reference for output values
+      - name: Display GitVersion outputs
+        run: |
+          echo "MajorMinorPatch: ${{ steps.gitversion.outputs.majorMinorPatch }}"
+          echo "NuGetVersionV2: ${{ steps.gitversion.outputs.nuGetVersionV2 }}"   
+          echo "CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}"    
+        
+      - name: Setup .NET Core @ Latest
+        uses: actions/setup-dotnet@v1
+      - name: Build
+        run: dotnet build --configuration $env:buildConfiguration -p:Version=${{ steps.gitversion.outputs.nuGetVersionV2 }}
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: v${{ steps.gitversion.outputs.nuGetVersionV2 }}
+          release_name: EPi.Source.Updater.${{ steps.gitversion.outputs.nuGetVersionV2 }}
+          draft: false
+          prerelease: false
+      - name: upload windows artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+         upload_url: ${{ steps.create_release.outputs.upload_url }}
+         asset_path: ./Epi.Source.Updater.zip
+         asset_name: EPi.Source.Updater.${{ steps.gitversion.outputs.nuGetVersionV2 }}.zip
+         asset_content_type: application/zip
+

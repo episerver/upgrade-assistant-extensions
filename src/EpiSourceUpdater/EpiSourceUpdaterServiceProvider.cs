@@ -1,6 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using Epi.Source.Updater.Internal;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.DotNet.UpgradeAssistant;
@@ -54,9 +55,15 @@ namespace Epi.Source.Updater
             services.Services.AddTransient<DiagnosticAnalyzer, FindUIConfigurationReplacementAnalyzer>();     // EP0003
             services.Services.AddTransient<DiagnosticAnalyzer, EpiObsoleteTypesAnalyzer>();         // EP0004
             services.Services.AddTransient<DiagnosticAnalyzer, EpiObsoleteUsingAnalyzer>();         // EP0005
+            services.Services.AddTransient<DiagnosticAnalyzer, EpiPartialControllerAnalyzer>();         // EP0006
+            services.Services.AddTransient<DiagnosticAnalyzer, EpiDisplayChannelAnalyzer>();         // EP0007
+            services.Services.AddTransient<DiagnosticAnalyzer, EpiMetadataAwareAnalyzer>();         // EP0008
+            services.Services.AddTransient<DiagnosticAnalyzer, EpiPartialRouterAnalyzer>();         // EP0009
+            services.Services.AddTransient<DiagnosticAnalyzer, EpiHttpContextBaseAccessorAnalyzer>();         // EP0010
 
             // Upgrade Step.
             services.Services.AddUpgradeStep<FindReplaceUpgradeStep>();
+            services.Services.AddUpgradeStep<EpiTemplateInserterStep>();
 
             // Code Fixers.
             services.Services.AddTransient<CodeFixProvider, EpiAttributeRemoverCodeFixProvider>();  // EP0001
@@ -64,6 +71,11 @@ namespace Epi.Source.Updater
             services.Services.AddTransient<CodeFixProvider, FindUIConfigurationReplacementCodeFixProvider>(); // EP0003
             services.Services.AddTransient<CodeFixProvider, EpiObsoleteTypesCodeFixProvider>();     // EP0004
             services.Services.AddTransient<CodeFixProvider, EpiObsoleteUsingCodeFixProvider>();     // EP0005
+            services.Services.AddTransient<CodeFixProvider, EpiPartialControllerCodeFixProvider>();     // EP0006
+            services.Services.AddTransient<CodeFixProvider, EpiDisplayChannelCodeFixProvider>();     // EP0007
+            services.Services.AddTransient<CodeFixProvider, EpiMetadataAwareCodeFixProvider>();     // EP0008
+            services.Services.AddTransient<CodeFixProvider, EpiPartialRouterCodeFixProvider>();     // EP0009
+            services.Services.AddTransient<CodeFixProvider, EpiHttpContextBaseAccessorCodeFixProvider>();     // EP0010
         }
     }
 }

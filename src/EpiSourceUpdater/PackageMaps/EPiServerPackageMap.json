@@ -21,6 +21,26 @@
       {
         "Name": "EPiServer.ServiceLocation.StructureMap",
         "Version": "*"
+      },
+      {
+        "Name": "Newtonsoft.Json",
+        "Version": "*"
+      },
+      {
+        "Name": "EPiServer.Logging.Log4Net",
+        "Version": "*"
+      },
+      {
+        "Name": "EPiServer.Commerce.UI.ManagerIntegration",
+        "Version": "*"
+      },
+      {
+        "Name": "EPiServer.Tracking.PageView",
+        "Version": "*"
+      },
+      {
+        "Name": "EPiServer.Personalization.CMS",
+        "Version": "*"
       }
     ],
     "NetCorePackages": []
@@ -41,10 +61,10 @@
     ]
   },
   {
-    "PackageSetName": "EPiServer.UI",
+    "PackageSetName": "EPiServer.CMS.UI",
     "NetFrameworkPackages": [
       {
-        "Name": "EPiServer.UI",
+        "Name": "EPiServer.CMS.UI",
         "Version": "11.99.99"
       }
     ],
@@ -52,6 +72,186 @@
       {
         "Name": "EPiServer.UI",
         "Version": "12.0.3"
+      }
+    ]
+  },
+  {
+    "PackageSetName": "EPiServer.CMS.UI.AspNetIdentity",
+    "NetFrameworkPackages": [
+      {
+        "Name": "EPiServer.CMS.UI.AspNetIdentity",
+        "Version": "11.99.99"
+      }
+    ],
+    "NetCorePackages": [
+      {
+        "Name": "EPiServer.CMS.UI.AspNetIdentity",
+        "Version": "12.0.3"
+      }
+    ]
+  },
+  {
+    "PackageSetName": "EPiServer.CMS.TinyMce",
+    "NetFrameworkPackages": [
+      {
+        "Name": "EPiServer.CMS.TinyMce",
+        "Version": "2.99.99"
+      }
+    ],
+    "NetCorePackages": [
+      {
+        "Name": "EPiServer.CMS.TinyMce",
+        "Version": "3.0.1"
+      }
+    ]
+  },
+  {
+    "PackageSetName": "EPiServer.Commerce.Core",
+    "NetFrameworkPackages": [
+      {
+        "Name": "EPiServer.Commerce.Core",
+        "Version": "13.99.99"
+      }
+    ],
+    "NetCorePackages": [
+      {
+        "Name": "EPiServer.Commerce.Core",
+        "Version": "14.1.2"
+      }
+    ]
+  },
+  {
+    "PackageSetName": "EPiServer.Commerce",
+    "NetFrameworkPackages": [
+      {
+        "Name": "EPiServer.Commerce",
+        "Version": "13.99.99"
+      }
+    ],
+    "NetCorePackages": [
+      {
+        "Name": "EPiServer.Commerce",
+        "Version": "14.1.2"
+      }
+    ]
+  },
+  {
+    "PackageSetName": "EPiServer.Commerce.UI",
+    "NetFrameworkPackages": [
+      {
+        "Name": "EPiServer.Commerce.UI",
+        "Version": "13.99.99"
+      }
+    ],
+    "NetCorePackages": [
+      {
+        "Name": "EPiServer.Commerce.UI",
+        "Version": "14.1.2"
+      }
+    ]
+  },
+  {
+    "PackageSetName": "EPiServer.Commerce.UI.CustomerService",
+    "NetFrameworkPackages": [
+      {
+        "Name": "EPiServer.Commerce.UI.CustomerService",
+        "Version": "13.99.99"
+      }
+    ],
+    "NetCorePackages": [
+      {
+        "Name": "EPiServer.Commerce.UI.CustomerService",
+        "Version": "14.1.2"
+      }
+    ]
+  },
+  {
+    "PackageSetName": "EPiServer.Personalization.Commerce",
+    "NetFrameworkPackages": [
+      {
+        "Name": "EPiServer.Personalization.Commerce",
+        "Version": "3.99.99"
+      }
+    ],
+    "NetCorePackages": [
+      {
+        "Name": "EPiServer.Personalization.Commerce",
+        "Version": "4.0.6"
+      }
+    ]
+  },
+  {
+    "PackageSetName": "EPiServer.Tracking.Commerce",
+    "NetFrameworkPackages": [
+      {
+        "Name": "EPiServer.Tracking.Commerce",
+        "Version": "3.99.99"
+      }
+    ],
+    "NetCorePackages": [
+      {
+        "Name": "EPiServer.Tracking.Commerce",
+        "Version": "4.0.6"
+      }
+    ]
+  },
+  {
+    "PackageSetName": "EPiServer.Tracking.Core",
+    "NetFrameworkPackages": [
+      {
+        "Name": "EPiServer.Tracking.Core",
+        "Version": "1.99.99"
+      }
+    ],
+    "NetCorePackages": [
+      {
+        "Name": "EPiServer.Tracking.Core",
+        "Version": "2.0.1"
+      }
+    ]
+  },
+  {
+    "PackageSetName": "EPiServer.Turnstile.Contracts.Hmac",
+    "NetFrameworkPackages": [
+      {
+        "Name": "EPiServer.Turnstile.Contracts.Hmac",
+        "Version": "3.99.99"
+      }
+    ],
+    "NetCorePackages": [
+      {
+        "Name": "EPiServer.Turnstile.Contracts.Hmac",
+        "Version": "4.5.2"
+      }
+    ]
+  },
+  {
+    "PackageSetName": "EPiServer.Find.Cms",
+    "NetFrameworkPackages": [
+      {
+        "Name": "EPiServer.Find.Cms",
+        "Version": "13.99.99"
+      }
+    ],
+    "NetCorePackages": [
+      {
+        "Name": "EPiServer.Find.Cms",
+        "Version": "14.0.4"
+      }
+    ]
+  },
+  {
+    "PackageSetName": "EPiServer.Forms",
+    "NetFrameworkPackages": [
+      {
+        "Name": "EPiServer.Forms",
+        "Version": "4.99.99"
+      }
+    ],
+    "NetCorePackages": [
+      {
+        "Name": "EPiServer.Forms",
+        "Version": "5.0.1"
       }
     ]
   }

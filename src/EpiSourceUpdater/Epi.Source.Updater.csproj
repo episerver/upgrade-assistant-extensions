@@ -4,9 +4,6 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Epi.Source.Updater</AssemblyName>
     <LangVersion>latest</LangVersion>
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
-    <FileVersion>1.0.1.0</FileVersion>
-    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,25 +12,33 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Database\MigrateAspnetIdentity.sql" />
     <None Remove="PackageMaps\EPiServerPackageMap.json" />
+    <None Remove="PackageMaps\GetaPackageMap.json" />
     <None Remove="Templates\EPiServerTemplates\TemplateConfig.json" />
   </ItemGroup>
 
   <!-- Be sure the extension's manifest file is copied on build,
        so that it will be present in the extension's binary output. -->
   <ItemGroup>
+    <Content Include="Database\MigrateAspnetIdentity.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="ExtensionManifest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PackageMaps\GetaPackageMap.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="PackageMaps\EPiServerPackageMap.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Templates\EPiServerTemplates\Program.cs">
+    <EmbeddedResource Include="Templates\EPiServerTemplates\Program.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Templates\EPiServerTemplates\Startup.cs">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\EPiServerTemplates\Startup.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </EmbeddedResource>
     <Content Include="Templates\EPiServerTemplates\TemplateConfig.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -43,7 +48,7 @@
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.2" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.8.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.8.0" />
-    <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Abstractions" Version="0.3.246501" />
+	<PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Abstractions" Version="*" />
   </ItemGroup>
 
   <ItemGroup>
@@ -69,4 +74,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+	<!-- Zip extension if desired -->
+	<Target Name="ZipPublishUpgradeAssistant" AfterTargets="Build">
+		<PropertyGroup>
+			<ExtensionOutputPath>$(SolutionDir)$(AssemblyName).zip</ExtensionOutputPath>
+		</PropertyGroup>
+		<ZipDirectory Overwrite="true" SourceDirectory="$(OutputPath)" DestinationFile="$(ExtensionOutputPath)" />
+		<Message Importance="High" Text="Zipped Upgrade Assistant Extension: $(ExtensionOutputPath)" />
+	</Target>
 </Project>

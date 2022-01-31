@@ -124,34 +124,52 @@
     <value>Attribute Argument '{0}' will be removed</value>
   </data>
   <data name="EpiAttributeRemoverTitle" xml:space="preserve">
-    <value>EPI Server Framework Attribute TemplateDescriptor will be updated</value>
+    <value>CMS Attribute TemplateDescriptor will be updated</value>
   </data>
   <data name="EpiClassUpgradeDescription" xml:space="preserve">
-    <value>This class is no longer supported on EPI Server and will be replaced</value>
+    <value>This class is no longer supported on CMS and will be replaced</value>
   </data>
   <data name="EpiClassUpgradeMessageFormat" xml:space="preserve">
     <value>Class '{0}' will be replaced with '{1}'</value>
   </data>
   <data name="EpiClassUpgradeTitle" xml:space="preserve">
-    <value>EPI Server Classes like  PartialContentController or BlockController will be replaced</value>
+    <value>CMS Classes like PartialContentController or BlockController will be replaced</value>
   </data>
   <data name="EpiDisallowedTypesDescription" xml:space="preserve">
-    <value>EPI Server .NET 5.0 override PropertyData ParseToObject is no longer required. Functionality can be achieved by creating a new instance and calling the ParsToSelf method.</value>
+    <value>In CMS 12 override of PropertyData ParseToObject is no longer required. Functionality can be achieved by creating a new instance and calling the ParsToSelf method.</value>
   </data>
   <data name="EpiDisallowedTypesMessageFormat" xml:space="preserve">
     <value>Type '{0}' Method override will be removed</value>
   </data>
   <data name="EpiDisallowedTypesTitle" xml:space="preserve">
-    <value>EPI Server .NET 5.0 projects should no longer use overrides for ParseToObject</value>
+    <value>CMS 12 projects should no longer use overrides for ParseToObject</value>
+  </data>
+  <data name="EpiDisplayChannelDescription" xml:space="preserve">
+    <value>CMS Display Channels will be updated.</value>
+  </data>
+  <data name="EpiDisplayChannelFormat" xml:space="preserve">
+    <value>Argument 'HttpContextBase' will be replaced with 'HttpContext'</value>
+  </data>
+  <data name="EpiDisplayChannelTitle" xml:space="preserve">
+    <value>CMS display channels will be updated</value>
+  </data>
+  <data name="EpiHttpContextBaseDescription" xml:space="preserve">
+    <value>ServiceAccessor&lt;HttpContextBase&gt; in constructor will changed to HttpContextAccessor.</value>
+  </data>
+  <data name="EpiHttpContextBaseFormat" xml:space="preserve">
+    <value>ServiceAccessor&lt;HttpContextBase&gt; in constructor will changed to HttpContextAccessor</value>
+  </data>
+  <data name="EpiHttpContextBaseTitle" xml:space="preserve">
+    <value>ServiceAccessor&lt;HttpContextBase&gt; in constructor will changed to HttpContextAccessor</value>
   </data>
   <data name="EpiMemberReplacementDescription" xml:space="preserve">
-    <value>The Interface IFindUIConfiguration is no longer supported on EPI Server and will be replaced</value>
+    <value>The Interface IFindUIConfiguration is no longer supported and will be replaced</value>
   </data>
   <data name="EpiMemberReplacementMessageFormat" xml:space="preserve">
     <value>Interface '{0}' will be replaced with '{1}'</value>
   </data>
   <data name="EpiMemberReplacementTitle" xml:space="preserve">
-    <value>EPI Server Framework IFindUIConfiguration will be replaced with FindOptions</value>
+    <value>IFindUIConfiguration will be replaced with FindOptions</value>
   </data>
   <data name="EpiObsoleteUsingDescription" xml:space="preserve">
     <value>Obsolete using statements should be removed.</value>
@@ -160,7 +178,25 @@
     <value>Using statement {0} should be removed</value>
   </data>
   <data name="EpiObsoleteUsingTitle" xml:space="preserve">
-    <value>EPI Server Remove obsolete usings like Mediachase.BusinessFoundation</value>
+    <value>Commerce: Remove obsolete usings like Mediachase.BusinessFoundation</value>
+  </data>
+  <data name="EpiPartialControllerDescription" xml:space="preserve">
+    <value>CMS partial controllers will be updated.</value>
+  </data>
+  <data name="EpiPartialControllerFormat" xml:space="preserve">
+    <value>Method 'Index' will be replaced with 'InvokeComponent'</value>
+  </data>
+  <data name="EpiPartialControllerTitle" xml:space="preserve">
+    <value>CMS partial controllers will be updated</value>
+  </data>
+  <data name="EpiPartialRouterDescription" xml:space="preserve">
+    <value>CMS partial routers will be updated.</value>
+  </data>
+  <data name="EpiPartialRouterMessageFormat" xml:space="preserve">
+    <value>Method signatures will be updated</value>
+  </data>
+  <data name="EpiPartialRouterTitle" xml:space="preserve">
+    <value>CMS partial routers will be updated</value>
   </data>
   <data name="MakeConstDescription" xml:space="preserve">
     <value>Variables that are not set after they are created should be marked as constant</value>
@@ -171,13 +207,22 @@
   <data name="MakeConstTitle" xml:space="preserve">
     <value>Replace obsolete Types and Attributes eg. TemplateDescriptor(Default)</value>
   </data>
+  <data name="MetadataAwareDescription" xml:space="preserve">
+    <value>Convert IMetadataAware to IDisplayMetadataProvider.</value>
+  </data>
+  <data name="MetadataAwareMessageFormat" xml:space="preserve">
+    <value>Implementation of IMetadataAware will be replaced with IDisplayMetadataProvider</value>
+  </data>
+  <data name="MetadataAwareTitle" xml:space="preserve">
+    <value>Convert IMetadataAware to IDisplayMetadataProvider</value>
+  </data>
   <data name="TypeUpgradeDescription" xml:space="preserve">
-    <value>This type is no longer supported on EPI Server and should be replaced.</value>
+    <value>This type is no longer supported on CMS and should be replaced.</value>
   </data>
   <data name="TypeUpgradeMessageFormat" xml:space="preserve">
     <value>Type '{0}' should be replaced with '{1}'</value>
   </data>
   <data name="TypeUpgradeTitle" xml:space="preserve">
-    <value>EPI Server Types and Namespaces should be upgraded</value>
+    <value>CMS Types and Namespaces should be upgraded</value>
   </data>
 </root>
