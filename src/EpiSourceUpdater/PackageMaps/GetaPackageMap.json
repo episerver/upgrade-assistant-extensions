@@ -17,5 +17,80 @@
         "Version": "1.0.0"
       }
     ]
+  },
+  {
+    "PackageSetName": "Sitemaps",
+    "NetFrameworkPackages": [
+      {
+        "Name": "Geta.SEO.Sitemaps",
+        "Version": "*"
+      }
+    ],
+    "NetCorePackages": [
+      {
+        "Name": "Geta.Optimizely.Sitemaps",
+        "Version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "PackageSetName": "Sitemaps.Commerce",
+    "NetFrameworkPackages": [
+      {
+        "Name": "Geta.SEO.Sitemaps.Commerce",
+        "Version": "*"
+      }
+    ],
+    "NetCorePackages": [
+      {
+        "Name": "Geta.Optimizely.Sitemaps.Commerce",
+        "Version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "PackageSetName": "ContentTypeIcons",
+    "NetFrameworkPackages": [
+      {
+        "Name": "Geta.Epi.FontThumbnail",
+        "Version": "*"
+      }
+    ],
+    "NetCorePackages": [
+      {
+        "Name": "Geta.Optimizely.ContentTypeIcons",
+        "Version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "PackageSetName": "Episerver.Extensions",
+    "NetFrameworkPackages": [
+      {
+        "Name": "Geta.EPi.Extensions",
+        "Version": "*"
+      }
+    ],
+    "NetCorePackages": [
+      {
+        "Name": "Geta.Optimizely.Extensions",
+        "Version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "PackageSetName": "GoogleProductFeed",
+    "NetFrameworkPackages": [
+      {
+        "Name": "Geta.GoogleProductFeed",
+        "Version": "*"
+      }
+    ],
+    "NetCorePackages": [
+      {
+        "Name": "Geta.Optimizely.GoogleProductFeed",
+        "Version": "1.0.0"
+      }
+    ]
   }
 ]
