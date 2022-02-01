@@ -254,5 +254,35 @@
         "Version": "5.0.1"
       }
     ]
+  },
+  {
+    "PackageSetName": "Advanced.CMS.AdvancedReviews",
+    "NetFrameworkPackages": [
+      {
+        "Name": "Advanced.CMS.AdvancedReviews",
+        "Version": "0.99.99"
+      }
+    ],
+    "NetCorePackages": [
+      {
+        "Name": "Advanced.CMS.AdvancedReviews",
+        "Version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "PackageSetName": "Advanced.CMS.TimeProperty",
+    "NetFrameworkPackages": [
+      {
+        "Name": "Advanced.CMS.TimeProperty",
+        "Version": "1.0.0"
+      }
+    ],
+    "NetCorePackages": [
+      {
+        "Name": "Advanced.CMS.TimeProperty",
+        "Version": "2.0.0"
+      }
+    ]
   }
 ]
