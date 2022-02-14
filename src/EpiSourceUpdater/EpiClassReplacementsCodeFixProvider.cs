@@ -63,13 +63,19 @@ namespace Epi.Source.Updater
         private static async Task<Document> ReplaceClassesAsync(Document document, BaseTypeSyntax localDeclaration, string newIdentifier, CancellationToken cancellationToken)
         {
             var baseType = localDeclaration;
-            var genericName = (SimpleNameSyntax)baseType.Type;
-
-            var newnode = genericName.WithIdentifier(SyntaxFactory.Identifier(newIdentifier));
+            NameSyntax newnode = null;
+            if (baseType.Type is SimpleNameSyntax simpleNameSyntax)
+            {
+                newnode = simpleNameSyntax.WithIdentifier(SyntaxFactory.Identifier(newIdentifier));
+            }
+            else if (baseType.Type is QualifiedNameSyntax qualifiedNameSyntax)
+            {
+                newnode = qualifiedNameSyntax.WithRight(qualifiedNameSyntax.Right.WithIdentifier(SyntaxFactory.Identifier(newIdentifier)));
+            }
 
             var syntaxTree = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
 
-            var newRoot = syntaxTree!.ReplaceNode(genericName, newnode);
+            var newRoot = syntaxTree!.ReplaceNode(baseType.Type, newnode);
             return document.WithSyntaxRoot(newRoot);
         }
     }
