@@ -14,7 +14,6 @@ namespace Epi.Source.Updater
     public abstract class EpiSubTypeAnalyzer : DiagnosticAnalyzer
     {
         private readonly string[] _baseTypes;
-        private readonly bool _genericType;
 
         public EpiSubTypeAnalyzer(params string[] baseTypes)
         {
@@ -33,6 +32,13 @@ namespace Epi.Source.Updater
                 if (baseType.Type is SimpleNameSyntax nameSyntax)
                 {
                     if (_baseTypes.Contains(nameSyntax.Identifier.Text, StringComparer.OrdinalIgnoreCase))
+                    {
+                        return true;
+                    }
+                }
+                else if (baseType.Type is QualifiedNameSyntax qualifiedNameSyntax)
+                {
+                    if (_baseTypes.Contains(qualifiedNameSyntax.Right.Identifier.Text, StringComparer.OrdinalIgnoreCase))
                     {
                         return true;
                     }
