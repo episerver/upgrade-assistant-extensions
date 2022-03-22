@@ -14,7 +14,7 @@ Grab the latest release from [here](https://github.com/episerver/upgrade-assista
 
 ## Using the extension
 
-Some of the source code upgrade code analysers requires that packages referenced are available in selected target framework. So for now when CMS targets net5.0 the recommendation is to target net5.0 when converting as well (target framework can be set to net6.0 after conversion is completed). To achieve this first set environment variable like:
+The recomendation is upgrade the solution to latest target framework version net6.0. If for some reason you will upgrade the solution to net5.0 please follow the following instructions:
 
 ```bash
 set DefaultTargetFrameworks__LTS=net5.0

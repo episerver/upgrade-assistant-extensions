@@ -56,7 +56,7 @@
     "NetCorePackages": [
       {
         "Name": "EPiServer.CMS",
-        "Version": "12.0.3"
+        "Version": "12.4.0"
       }
     ]
   },
@@ -70,8 +70,8 @@
     ],
     "NetCorePackages": [
       {
-        "Name": "EPiServer.UI",
-        "Version": "12.0.3"
+        "Name": "EPiServer.CMS.UI",
+        "Version": "12.4.0"
       }
     ]
   },
@@ -86,7 +86,7 @@
     "NetCorePackages": [
       {
         "Name": "EPiServer.CMS.UI.AspNetIdentity",
-        "Version": "12.0.3"
+        "Version": "12.4.0"
       }
     ]
   },
@@ -101,7 +101,7 @@
     "NetCorePackages": [
       {
         "Name": "EPiServer.CMS.TinyMce",
-        "Version": "3.0.1"
+        "Version": "3.1.0"
       }
     ]
   },
@@ -116,7 +116,7 @@
     "NetCorePackages": [
       {
         "Name": "EPiServer.Commerce.Core",
-        "Version": "14.1.2"
+        "Version": "14.2.0"
       }
     ]
   },
@@ -131,7 +131,7 @@
     "NetCorePackages": [
       {
         "Name": "EPiServer.Commerce",
-        "Version": "14.1.2"
+        "Version": "14.2.0"
       }
     ]
   },
@@ -146,7 +146,7 @@
     "NetCorePackages": [
       {
         "Name": "EPiServer.Commerce.UI",
-        "Version": "14.1.2"
+        "Version": "14.2.0"
       }
     ]
   },
@@ -161,7 +161,7 @@
     "NetCorePackages": [
       {
         "Name": "EPiServer.Commerce.UI.CustomerService",
-        "Version": "14.1.2"
+        "Version": "14.2.0"
       }
     ]
   },
@@ -176,7 +176,7 @@
     "NetCorePackages": [
       {
         "Name": "EPiServer.Personalization.Commerce",
-        "Version": "4.0.6"
+        "Version": "4.0.8"
       }
     ]
   },
@@ -191,7 +191,7 @@
     "NetCorePackages": [
       {
         "Name": "EPiServer.Tracking.Commerce",
-        "Version": "4.0.6"
+        "Version": "4.0.8"
       }
     ]
   },
