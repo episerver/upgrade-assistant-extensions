@@ -20,11 +20,11 @@ Support for Extension ZIP Files is available from **v0.2.231403**
 
 
 ### Epi Server Extension
-Download Source Code and rebuild it using Visual Studio 2019: [EPI Server Upgrade-Assistant-Extension](https://github.com/episerver/upgrade-assistant-extensions/tree/develop) 
+Download Source Code and rebuild it using Visual Studio 2019/2022: [EPI Server Upgrade-Assistant-Extension](https://github.com/episerver/upgrade-assistant-extensions/tree/develop) 
 
 If successfully rebuilt, take the extension Files and copy them to another place on your local machine: 
 eg. 
- from ..\src\SourceUpdater\bin\Debug\netstandard2.0  to  c:\EPI-Extension\  
+ from ..\src\SourceUpdater\bin\Debug\net6.0  to  c:\EPI-Extension\  
 ![Screenshot with EPI Server Extension](./images/Epi-Extension-items.jpg)
 
 Or also zip those Files into a .zip File, eg. EPI.SourceCode.Updater.zip.  
