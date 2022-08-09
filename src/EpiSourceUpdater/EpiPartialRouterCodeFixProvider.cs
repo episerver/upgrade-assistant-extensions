@@ -76,12 +76,12 @@ namespace Epi.Source.Updater
             var parameters = routePartialMethod.ParameterList.Parameters;
             var obsoleteParameter = routePartialMethod.ParameterList.Parameters[1];
             parameters = parameters.Remove(obsoleteParameter);
-            parameters = parameters.Add(obsoleteParameter.WithType(SyntaxFactory.ParseTypeName("UrlResolverContext")));
+            parameters = parameters.Add(obsoleteParameter.WithType(SyntaxFactory.ParseTypeName("UrlResolverContext").WithTrailingTrivia(SyntaxFactory.Whitespace(" "))));
             var updatedMethod = routePartialMethod.WithParameterList(SyntaxFactory.ParameterList(parameters));
             
             var newRoot = root.ReplaceNode(routePartialMethod, updatedMethod);
             var updatedDocument = document.WithSyntaxRoot(newRoot);
-            localDeclaration = newRoot.FindNode(localDeclaration.Span) as ClassDeclarationSyntax;
+            localDeclaration = newRoot.FindNode(localDeclaration.Identifier.Span) as ClassDeclarationSyntax;
 
             var virtualPathMethod = FindMethod(localDeclaration, "GetPartialVirtualPath");
             parameters = virtualPathMethod.ParameterList.Parameters;

@@ -28,7 +28,7 @@ namespace Epi.Source.Updater
         private const string Category = "Upgrade";
 
 
-        private static readonly string MethodName = "RoutePartial";
+        private static readonly string MethodName = "GetPartialVirtualPath";
         private static readonly string RegistrationMethod = "RegisterPartialRouter";
         private static readonly string[] BaseTypes = new[] { "IPartialRouter" };
 
@@ -75,7 +75,7 @@ namespace Epi.Source.Updater
             if (namespaceName.Equals(MethodName, StringComparison.Ordinal))
             {
                 var parameters = methodDirective.ParameterList.Parameters;
-                if (IsSubType(methodDirective.Parent as ClassDeclarationSyntax))
+                if (IsSubType(methodDirective.Parent as ClassDeclarationSyntax) && parameters.Count == 4)
                 {
                     var diagnostic = Diagnostic.Create(Rule, methodDirective.Parent.GetLocation(), methodDirective.ToFullString());
                     context.ReportDiagnostic(diagnostic);
