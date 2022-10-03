@@ -62,6 +62,13 @@ namespace Epi.Source.Updater
         {
             var root = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
             var metadataType = node.BaseList.Types.OfType<BaseTypeSyntax>().FirstOrDefault(t => t.Type is IdentifierNameSyntax nameSyntax && nameSyntax.Identifier.Text == "IMetadataAware");
+            // try to find it with qualified name synatx
+            metadataType ??= node.BaseList.Types.OfType<SimpleBaseTypeSyntax>().FirstOrDefault(t => t.Type is QualifiedNameSyntax qualifiedNameSyntax && qualifiedNameSyntax.Right?.Identifier.Text == "IMetadataAware");
+            if (metadataType is null)
+            {
+                return document;
+            }
+                    
             var baseListWithoutInterface = node.BaseList.RemoveNode(metadataType, SyntaxRemoveOptions.KeepLeadingTrivia | SyntaxRemoveOptions.KeepTrailingTrivia | SyntaxRemoveOptions.KeepEndOfLine);
             var baseListWithDisplayModeProvider = baseListWithoutInterface.AddTypes(SyntaxFactory.SimpleBaseType(SyntaxFactory.ParseTypeName("IDisplayMetadataProvider"))); 
             var withDisplayModeProvider = node.WithBaseList(baseListWithDisplayModeProvider);
