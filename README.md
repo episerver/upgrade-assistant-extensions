@@ -1,5 +1,8 @@
 # Optimizely Upgrade Assistant Extensions
 
+> [!WARNING]
+> The Upgrade Assistant has been deprecated in favor of [GitHub Copilot app modernization chat agent](https://learn.microsoft.com/en-us/dotnet/core/porting/github-copilot-app-modernization/overview).
+
 [![Continuous integration](https://github.com/episerver/upgrade-assistant-extensions/actions/workflows/ci.yml/badge.svg)](https://github.com/episerver/upgrade-assistant-extensions/actions/workflows/ci.yml)
 
 This repository contains extensions to the Upgrade Assistant tool specific to Optimizely scenarios.
